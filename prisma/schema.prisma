@@ -15,8 +15,8 @@ model Pedido {
   createdAt DateTime @default(now())
   nome String
   empresa String
-  telefone String @unique
-  email String @unique
+  telefone String
+  email String
   observacoes String?
   interfaces Interface[]
   cabos Item_Cabo[]
