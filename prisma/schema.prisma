@@ -9,3 +9,58 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Pedido {
+  idPedido Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  nome String
+  empresa String
+  telefone String @unique
+  email String @unique
+  observacoes String?
+  interfaces Interface[]
+  cabos Item_Cabo[]
+}
+
+model Interface {
+  idInterface Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  quantidade Int
+  valor Float
+  imagem String
+  idPedido Int
+  pedido Pedido @relation(fields: [idPedido], references: [idPedido])
+  ambientes Ambiente[]
+  itens Item_Interface[]
+}
+
+model Ambiente {
+  idAmbiente Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  idInterface Int
+  ambiente String
+  interface Interface @relation(fields: [idInterface], references: [idInterface])
+}
+
+model Item_Interface {
+  idItemInterface Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  idInterface Int
+  descricao String
+  preco Float
+  quantidade Int
+  interface Interface @relation(fields: [idInterface], references: [idInterface])
+}
+
+model Item_Cabo {
+  idItemCabo Int @id @default(autoincrement())
+  nome String
+  quantidade Int
+  preco Float
+  idPedido Int
+  pedido Pedido @relation(fields: [idPedido], references: [idPedido])
+}
+
+
+
+
