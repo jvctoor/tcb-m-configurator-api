@@ -62,6 +62,28 @@ app.get('/', (req: Request, res: Response) => {
  */
  app.get('/pedido', getAllPedidos);
 
+ /**
+ * @swagger
+ * /pdf/pedidoId/{id_pedido}:
+ *   get:
+ *     tags:
+ *       - Pdf
+ *     description: Obter documento PDF de um pedido
+ *     parameters:
+ *       - in: path
+ *         name: id_pedido
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID do pedido a ser obtido
+ *     responses:
+ *       200:
+ *         description: Sucesso
+ */
+ app.get('/pdf/pedidoId/:id', (req: Request, res: Response) => {
+    res.status(500).send("Em implementação")
+ })
+
 /**
  * @swagger
  * /pedido/{id}:

@@ -59,6 +59,27 @@ server_1.default.post('/pedido', pedidoController_1.createPedido);
  */
 server_1.default.get('/pedido', pedidoController_1.getAllPedidos);
 /**
+* @swagger
+* /pdf/pedidoId/{id_pedido}:
+*   get:
+*     tags:
+*       - Pdf
+*     description: Obter documento PDF de um pedido
+*     parameters:
+*       - in: path
+*         name: id_pedido
+*         required: true
+*         schema:
+*           type: integer
+*         description: ID do pedido a ser obtido
+*     responses:
+*       200:
+*         description: Sucesso
+*/
+server_1.default.get('/pdf/pedidoId/:id', (req, res) => {
+    res.status(500).send("Em implementação");
+});
+/**
  * @swagger
  * /pedido/{id}:
  *   get:
