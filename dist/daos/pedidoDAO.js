@@ -76,5 +76,22 @@ class PedidoDAO {
             });
         });
     }
+    getPedidoById(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return prisma.pedido.findUnique({
+                where: {
+                    idPedido: id
+                },
+                include: {
+                    cabos: true,
+                    interfaces: {
+                        include: {
+                            ambientes: true
+                        }
+                    }
+                }
+            });
+        });
+    }
 }
 exports.default = PedidoDAO;

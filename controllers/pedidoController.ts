@@ -1,5 +1,5 @@
 import { resolveSoa } from 'dns';
-import e, { Request, Response } from 'express';
+import e, { request, Request, Response } from 'express';
 import { readdirSync } from 'fs';
 import PedidoDAO from '../daos/pedidoDAO';
 import IPedido from '../models/pedidoModel'
@@ -53,5 +53,38 @@ export const createPedido = async (req: Request, res: Response) => {
         } else {
             res.status(500).send({payload: 'Ocorreu um erro no servidor.'});
         }
+    }
+}
+
+export const getAllPedidos = async (req: Request, res: Response) => {
+    try {
+        const pedidos = await pedidoDAO.getAllPedidos();
+        if (pedidos) {
+            res.send({message: "Sucesso!", total: pedidos.length, payload: pedidos})
+        } else {
+            res.send({message:"Nada por aqui!", total:0, payload: []})
+        }
+    } catch (e) {
+        if (e instanceof Error) {
+            const errorMessage = e.message;
+            res.status(400).send({payload: errorMessage});
+        } 
+    }
+}
+
+export const getPedidoById = async (req: Request, res: Response) => {
+    const id = req.params.id;
+    try {
+        const pedido = await pedidoDAO.getPedidoById(parseInt(id));
+        if (pedido) {
+            res.send({message: "Sucesso!", payload: pedido})
+        } else {
+            res.send({message: "Ops! Nada por aqui"})
+        }
+    } catch(e) {
+        if (e instanceof Error) {
+            const errorMessage = e.message;
+            res.status(400).send({payload: errorMessage});
+        } 
     }
 }

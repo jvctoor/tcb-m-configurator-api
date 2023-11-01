@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createPedido = void 0;
+exports.getPedidoById = exports.getAllPedidos = exports.createPedido = void 0;
 const pedidoDAO_1 = __importDefault(require("../daos/pedidoDAO"));
 const pedidoDAO = new pedidoDAO_1.default();
 function verificaPedido(pedido) {
@@ -65,3 +65,40 @@ const createPedido = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.createPedido = createPedido;
+const getAllPedidos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const pedidos = yield pedidoDAO.getAllPedidos();
+        if (pedidos) {
+            res.send({ message: "Sucesso!", total: pedidos.length, payload: pedidos });
+        }
+        else {
+            res.send({ message: "Nada por aqui!", total: 0, payload: [] });
+        }
+    }
+    catch (e) {
+        if (e instanceof Error) {
+            const errorMessage = e.message;
+            res.status(400).send({ payload: errorMessage });
+        }
+    }
+});
+exports.getAllPedidos = getAllPedidos;
+const getPedidoById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
+    try {
+        const pedido = yield pedidoDAO.getPedidoById(parseInt(id));
+        if (pedido) {
+            res.send({ message: "Sucesso!", payload: pedido });
+        }
+        else {
+            res.send({ message: "Ops! Nada por aqui" });
+        }
+    }
+    catch (e) {
+        if (e instanceof Error) {
+            const errorMessage = e.message;
+            res.status(400).send({ payload: errorMessage });
+        }
+    }
+});
+exports.getPedidoById = getPedidoById;

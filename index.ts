@@ -3,7 +3,7 @@ import express, { Express, Request, Response } from 'express';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import bodyParser from 'body-parser';
-import { createPedido } from './controllers/pedidoController';
+import { createPedido, getAllPedidos, getPedidoById } from './controllers/pedidoController';
 
 const swaggerOptions = {
   swaggerDefinition: {
@@ -46,10 +46,43 @@ app.get('/', (req: Request, res: Response) => {
  *       200:
  *         description: Sucesso
  */
-
  app.post('/pedido', createPedido);
 
+
 /**
+ * @swagger
+ * /pedido:
+ *   get:
+ *     tags:
+ *       - Pedidos
+ *     description: Get todos os pedidos
+ *     responses:
+ *       200:
+ *         description: Sucesso
+ */
+ app.get('/pedido', getAllPedidos);
+
+/**
+ * @swagger
+ * /pedido/{id}:
+ *   get:
+ *     tags:
+ *       - Pedidos
+ *     description: Obter pedido pelo ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID do pedido a ser obtido
+ *     responses:
+ *       200:
+ *         description: Sucesso
+ */
+  app.get('/pedido/:id', getPedidoById);
+
+ /**
  * @swagger
  * definitions:
  *   IPedido:
@@ -57,12 +90,16 @@ app.get('/', (req: Request, res: Response) => {
  *     properties:
  *       nome:
  *         type: string
+ *         default: "João"  # Valor padrão para o campo "nome"
  *       empresa:
  *         type: string
+ *         default: "foursys"  # Valor padrão para o campo "empresa"
  *       telefone:
  *         type: string
+ *         default: "1398169810"  # Valor padrão para o campo "telefone"
  *       email:
  *         type: string
+ *         default: "jvctor23@gmail.com"  # Valor padrão para o campo "email"
  *       interfaces:
  *         type: array
  *         items:
@@ -70,10 +107,13 @@ app.get('/', (req: Request, res: Response) => {
  *           properties:
  *             quantidade:
  *               type: number
+ *               default: 2  # Valor padrão para o campo "quantidade"
  *             valor:
  *               type: number
+ *               default: 2000.90  # Valor padrão para o campo "valor"
  *             imagem:
  *               type: string
+ *               default: "url"  # Valor padrão para o campo "imagem"
  *             itens:
  *               type: array
  *               items:
@@ -81,14 +121,18 @@ app.get('/', (req: Request, res: Response) => {
  *                 properties:
  *                   descricao:
  *                     type: string
+ *                     default: "modulo 1"  # Valor padrão para o campo "descricao"
  *                   preco:
  *                     type: number
+ *                     default: 20.0  # Valor padrão para o campo "preco"
  *                   quantidade:
  *                     type: number
+ *                     default: 3  # Valor padrão para o campo "quantidade"
  *             ambientes:
  *               type: array
  *               items:
  *                 type: string
+ *                 default: "Sala de estar"  # Valor padrão para o campo "ambientes"
  *       cabos:
  *         type: array
  *         items:
@@ -96,10 +140,14 @@ app.get('/', (req: Request, res: Response) => {
  *           properties:
  *             nome:
  *               type: string
+ *               default: "Cabo Do joão"  # Valor padrão para o campo "nome"
  *             quantidade:
  *               type: number
+ *               default: 3  # Valor padrão para o campo "quantidade"
  *             preco:
  *               type: number
+ *               default: 2.90  # Valor padrão para o campo "preco"
  *       observacoes:
  *         type: string
+ *         default: "obs"  # Valor padrão para o campo "observacoes"
  */

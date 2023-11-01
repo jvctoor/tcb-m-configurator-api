@@ -70,6 +70,22 @@ class PedidoDAO {
             }
         })
     }
+
+    async getPedidoById(id: number) {
+        return prisma.pedido.findUnique({
+            where: {
+                idPedido: id
+            },
+            include: {
+                cabos: true,
+                interfaces: {
+                    include: {
+                        ambientes:true
+                    }
+                }
+            }
+        })
+    }
 }
 
 export default PedidoDAO;
