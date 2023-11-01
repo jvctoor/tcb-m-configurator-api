@@ -32,7 +32,7 @@ app.get('/', (req: Request, res: Response) => {
       </style>
     </head>
     <body>
-      <h1>Hello, Xano</h1>
+      <h1>Hello, Xano!</h1>
     </body>
     </html>
   `;
