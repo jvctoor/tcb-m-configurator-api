@@ -1,15 +1,16 @@
-import express, { Request, Response } from 'express';
-import dotenv from 'dotenv';
-
-dotenv.config();
-
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 // Middlewares e configurações aqui
-
-const app = express();
+const app = (0, express_1.default)();
 const PORT = process.env.PORT;
-
-app.get('/', (req: Request, res: Response) => {
-  const htmlContent = `
+app.get('/', (req, res) => {
+    const htmlContent = `
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -36,10 +37,8 @@ app.get('/', (req: Request, res: Response) => {
     </body>
     </html>
   `;
-  res.send(htmlContent);
+    res.send(htmlContent);
 });
-
 app.listen(PORT, () => {
-  console.log(`🚀 Servidor rodando na porta ${PORT}`);
+    console.log(`🚀 Servidor rodando na porta ${PORT}`);
 });
-
