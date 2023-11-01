@@ -32,9 +32,74 @@ app.get('/', (req: Request, res: Response) => {
  *     tags:
  *       - Pedidos
  *     description: Inserir Pedido
+ *     parameters:
+ *       - in: body
+ *         name: pedido
+ *         required: true
+ *         description: O pedido.
+ *         schema:
+ *           type: object
+ *           properties:
+ *             pedido:
+ *               $ref: '#/definitions/IPedido'
  *     responses:
  *       200:
  *         description: Sucesso
  */
+
  app.post('/pedido', createPedido);
 
+/**
+ * @swagger
+ * definitions:
+ *   IPedido:
+ *     type: object
+ *     properties:
+ *       nome:
+ *         type: string
+ *       empresa:
+ *         type: string
+ *       telefone:
+ *         type: string
+ *       email:
+ *         type: string
+ *       interfaces:
+ *         type: array
+ *         items:
+ *           type: object
+ *           properties:
+ *             quantidade:
+ *               type: number
+ *             valor:
+ *               type: number
+ *             imagem:
+ *               type: string
+ *             itens:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   descricao:
+ *                     type: string
+ *                   preco:
+ *                     type: number
+ *                   quantidade:
+ *                     type: number
+ *             ambientes:
+ *               type: array
+ *               items:
+ *                 type: string
+ *       cabos:
+ *         type: array
+ *         items:
+ *           type: object
+ *           properties:
+ *             nome:
+ *               type: string
+ *             quantidade:
+ *               type: number
+ *             preco:
+ *               type: number
+ *       observacoes:
+ *         type: string
+ */
