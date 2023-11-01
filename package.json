@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npx tsc",
+    "postbuild": "npm run start",
     "start": "node dist/index.js",
     "dev": "npx tsc -w & nodemon dist/index.js"
   },
@@ -16,6 +17,7 @@
     "@types/node": "^20.8.10",
     "nodemon": "^3.0.1",
     "prisma": "^5.5.2",
+    "rimraf": "^5.0.5",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   },
@@ -23,7 +25,6 @@
     "@prisma/client": "^5.5.2",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "jsonwebtoken": "^9.0.2",
-    "rimraf": "^5.0.5"
+    "jsonwebtoken": "^9.0.2"
   }
 }
