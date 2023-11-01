@@ -1,28 +1,11 @@
 import { PrismaClient, Prisma } from '@prisma/client'
 import internal from 'stream';
 const prisma = new PrismaClient()
+import IPedido from '../models/pedidoModel'
 
 class PedidoDAO {
 
-    async createPedido(pedido: {
-        nome: string,
-        empresa: string,
-        telefone: string,
-        email: string,
-        interfaces: {
-            quantidade: number;
-            valor: number;
-            imagem: string;
-            itens: {
-                descricao: string;
-                preco: number;
-                quantidade: number;
-            }[]
-            ambientes: string[];
-        }[],
-        cabos: { nome: string; quantidade: number; preco: number }[],
-        observacoes?: string
-    }
+    async createPedido(pedido: IPedido
     ) {
 
         const interfacesData = pedido.interfaces.map(interfaceItem => ({

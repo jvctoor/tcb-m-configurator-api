@@ -2,6 +2,8 @@ import app from './server';
 import express, { Express, Request, Response } from 'express';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
+import bodyParser from 'body-parser';
+import { createPedido } from './controllers/pedidoController';
 
 const swaggerOptions = {
   swaggerDefinition: {
@@ -17,16 +19,22 @@ const swaggerOptions = {
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use(bodyParser.json())
+
+app.get('/', (req: Request, res: Response) => {
+  res.send("Hello Joao");
+});
 
 /**
  * @swagger
- * /:
- *   get:
- *     description: Hello
+ * /pedido:
+ *   post:
+ *     tags:
+ *       - Pedidos
+ *     description: Inserir Pedido
  *     responses:
  *       200:
  *         description: Sucesso
  */
-app.get('/', (req: Request, res: Response) => {
-  res.send("Hello Joao");
-});
+ app.post('/pedido', createPedido);
+

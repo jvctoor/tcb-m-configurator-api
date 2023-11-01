@@ -1,5 +1,6 @@
 import { PrismaClient, Prisma } from '@prisma/client'
 import PedidoDAO from './daos/pedidoDAO'
+import IPedido from './models/pedidoModel';
 
 const prisma = new PrismaClient()
 
@@ -29,7 +30,7 @@ async function main() {
       { nome: "Cabo de rede RJ-45", quantidade: 1, preco: 39.90 }
     ]
 
-    const pedido = {
+    const pedido: IPedido = {
       nome: "João",
       empresa: "Foursys",
       telefone: "13981699801",
