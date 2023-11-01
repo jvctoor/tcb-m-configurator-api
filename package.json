@@ -5,13 +5,14 @@
   "main": "app.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./app.ts",
-    "nodemon": "npx nodemon app.ts"
+    "start": "ts-node ./app.ts",
+    "nodemon": "nodemon ./app.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/express": "^4.17.20",
     "@types/node": "^20.8.10",
     "nodemon": "^3.0.1",
     "prisma": "^5.5.2",
