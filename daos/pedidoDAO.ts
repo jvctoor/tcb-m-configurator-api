@@ -4,27 +4,86 @@ const prisma = new PrismaClient()
 
 class PedidoDAO {
 
-    async createPedido(nome: string, empresa: string, telefone: string, email: string, interfaces: {quantidade: number, valor: number, imagem: string }[], observacoes?: string) {
+    async createPedido(pedido: {
+        nome: string,
+        empresa: string,
+        telefone: string,
+        email: string,
+        interfaces: {
+            quantidade: number;
+            valor: number;
+            imagem: string;
+            itens: {
+                descricao: string;
+                preco: number;
+                quantidade: number;
+            }[]
+            ambientes: string[];
+        }[],
+        cabos: { nome: string; quantidade: number; preco: number }[],
+        observacoes?: string
+    }
+    ) {
+
+        const interfacesData = pedido.interfaces.map(interfaceItem => ({
+            quantidade: interfaceItem.quantidade,
+            valor: interfaceItem.valor,
+            imagem: interfaceItem.imagem,
+            itens: {
+                create: interfaceItem.itens.map(item => ({
+                    descricao: item.descricao,
+                    preco: item.preco,
+                    quantidade: item.quantidade
+                }))
+            },
+            ambientes: {
+                create: interfaceItem.ambientes.map(ambiente => ({
+                    ambiente: ambiente
+                }))
+            }
+        }));
+
+        const cabosData = pedido.cabos.map(cabo => ({
+            nome: cabo.nome,
+            quantidade: cabo.quantidade,
+            preco: cabo.preco
+        }));
+
         return prisma.pedido.create({
             data: {
-              nome,
-              empresa,
-              telefone,
-              email,
-              observacoes,
-              interfaces: {
-                create: interfaces,
-              },
+                nome: pedido.nome,
+                empresa: pedido.empresa,
+                telefone: pedido.telefone,
+                email: pedido.email,
+                observacoes: pedido.observacoes,
+                interfaces: {
+                    create: interfacesData
+                },
+                cabos: {
+                    create: cabosData,
+                }
             }, include: {
-                interfaces: true
+                interfaces: {
+                    include: {
+                        ambientes: true,
+                        itens: true
+                    }
+                },
+                cabos: true
             },
-          });
+        });
     }
 
     async getAllPedidos() {
         return prisma.pedido.findMany({
             include: {
-                interfaces: true
+                interfaces: {
+                    include: {
+                        ambientes: true,
+                        itens: true
+                    }
+                },
+                cabos: true
             }
         })
     }

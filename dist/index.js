@@ -3,42 +3,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
-// Middlewares e configurações aqui
-const app = (0, express_1.default)();
-const PORT = process.env.PORT;
-app.get('/', (req, res) => {
-    const htmlContent = `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Hello, Tiago</title>
-      <style>
-        body {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 100vh;
-          margin: 0;
-        }
-        h1 {
-          font-family: Arial, sans-serif;
-          font-size: 5em;
-          color: #333;
-        }
-      </style>
-    </head>
-    <body>
-      <h1>Hello, Xano!</h1>
-    </body>
-    </html>
-  `;
-    res.send(htmlContent);
-});
-app.listen(PORT, () => {
-    console.log(`🚀 Servidor rodando na porta ${PORT}`);
+const server_1 = __importDefault(require("./server"));
+const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
+const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
+const swaggerOptions = {
+    swaggerDefinition: {
+        info: {
+            title: 'TCB-M Configurator - Ultimate API 4Makers Team Santos x Sorocaba',
+            version: '1.0.0',
+            description: 'Documentação da API',
+        },
+    },
+    apis: ['./index.ts'], // Caminho dos seus arquivos de rotas
+};
+const swaggerSpec = (0, swagger_jsdoc_1.default)(swaggerOptions);
+server_1.default.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swaggerSpec));
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     description: Hello
+ *     responses:
+ *       200:
+ *         description: Sucesso
+ */
+server_1.default.get('/', (req, res) => {
+    res.send("Hello Joao");
 });

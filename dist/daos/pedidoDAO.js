@@ -12,20 +12,51 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 class PedidoDAO {
-    createPedido(nome, empresa, telefone, email, interfaces, observacoes) {
+    createPedido(pedido) {
         return __awaiter(this, void 0, void 0, function* () {
+            const interfacesData = pedido.interfaces.map(interfaceItem => ({
+                quantidade: interfaceItem.quantidade,
+                valor: interfaceItem.valor,
+                imagem: interfaceItem.imagem,
+                itens: {
+                    create: interfaceItem.itens.map(item => ({
+                        descricao: item.descricao,
+                        preco: item.preco,
+                        quantidade: item.quantidade
+                    }))
+                },
+                ambientes: {
+                    create: interfaceItem.ambientes.map(ambiente => ({
+                        ambiente: ambiente
+                    }))
+                }
+            }));
+            const cabosData = pedido.cabos.map(cabo => ({
+                nome: cabo.nome,
+                quantidade: cabo.quantidade,
+                preco: cabo.preco
+            }));
             return prisma.pedido.create({
                 data: {
-                    nome,
-                    empresa,
-                    telefone,
-                    email,
-                    observacoes,
+                    nome: pedido.nome,
+                    empresa: pedido.empresa,
+                    telefone: pedido.telefone,
+                    email: pedido.email,
+                    observacoes: pedido.observacoes,
                     interfaces: {
-                        create: interfaces,
+                        create: interfacesData
                     },
+                    cabos: {
+                        create: cabosData,
+                    }
                 }, include: {
-                    interfaces: true
+                    interfaces: {
+                        include: {
+                            ambientes: true,
+                            itens: true
+                        }
+                    },
+                    cabos: true
                 },
             });
         });
@@ -34,7 +65,13 @@ class PedidoDAO {
         return __awaiter(this, void 0, void 0, function* () {
             return prisma.pedido.findMany({
                 include: {
-                    interfaces: true
+                    interfaces: {
+                        include: {
+                            ambientes: true,
+                            itens: true
+                        }
+                    },
+                    cabos: true
                 }
             });
         });

@@ -1,46 +1,32 @@
+import app from './server';
 import express, { Express, Request, Response } from 'express';
+import swaggerUi from 'swagger-ui-express';
+import swaggerJsdoc from 'swagger-jsdoc';
 
-import dotenv from 'dotenv';
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      title: 'TCB-M Configurator - Ultimate API 4Makers Team Santos x Sorocaba',
+      version: '1.0.0',
+      description: 'Documentação da API',
+    },
+  },
+  apis: ['./index.ts'], // Caminho dos seus arquivos de rotas
+};
 
-dotenv.config();
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
-// Middlewares e configurações aqui
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-const app = express();
-const PORT = process.env.PORT;
-
-app.get('/', (req, res) => {
-  const htmlContent = `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Hello, Tiago</title>
-      <style>
-        body {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 100vh;
-          margin: 0;
-        }
-        h1 {
-          font-family: Arial, sans-serif;
-          font-size: 5em;
-          color: #333;
-        }
-      </style>
-    </head>
-    <body>
-      <h1>Hello, Xano!</h1>
-    </body>
-    </html>
-  `;
-  res.send(htmlContent);
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     description: Hello
+ *     responses:
+ *       200:
+ *         description: Sucesso
+ */
+app.get('/', (req: Request, res: Response) => {
+  res.send("Hello Joao");
 });
-
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor rodando na porta ${PORT}`);
-});
-
