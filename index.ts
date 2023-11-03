@@ -5,7 +5,7 @@ import cors from 'cors';
 import swaggerJsdoc from 'swagger-jsdoc';
 import bodyParser from 'body-parser';
 import { createPedido, getAllPedidos, getPedidoById } from './controllers/pedidoController';
-import { getPDFById, downloadPDF } from './controllers/pdfController';
+import { getPDFById, downloadPDF, generatePDF } from './controllers/pdfController';
 
 const swaggerOptions = {
   swaggerDefinition: {
@@ -103,7 +103,7 @@ app.get('/', (req: Request, res: Response) => {
  *       200:
  *         description: Sucesso
  */
- app.get('/pdf/download/:id', downloadPDF)
+ app.get('/pdf/download/:id', generatePDF)
 
 /**
  * @swagger

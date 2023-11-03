@@ -98,7 +98,7 @@ server_1.default.get('/pdf/viewTemplate/:id', pdfController_1.getPDFById);
 *       200:
 *         description: Sucesso
 */
-server_1.default.get('/pdf/download/:id', pdfController_1.downloadPDF);
+server_1.default.get('/pdf/download/:id', pdfController_1.generatePDF);
 /**
  * @swagger
  * /pedido/{id}:

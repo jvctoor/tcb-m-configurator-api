@@ -12,7 +12,7 @@ export const generatePDF = async (req: Request, res: Response) => {
     const pedido = await pedidoDAO.getPedidoById(parseInt(req.params.id));
     //console.log(JSON.stringify({pedido: pedido}, null, 2))
     
-    ejs.renderFile(path.join(__dirname, "..", "utils", "invoice-model.ejs"), {pedido: pedido}, (error, html) => {
+    ejs.renderFile(path.join(__dirname, ".." ,"utils", "invoice-model.ejs"), {pedido: pedido}, (error, html) => {
         if (error) {
             console.log("Erro")
             return res.status(500).send(error)
@@ -31,14 +31,19 @@ export const generatePDF = async (req: Request, res: Response) => {
 
         }
 
-        pdf.create(html, options).toFile("pedido.pdf", (err, data) => {
-            if (err) {
-                return res.status(500).send(err)
-            }
-            console.log("Gerado")
-        })
-
-        return res.send(html)
+        try {
+            pdf.create(html, options).toFile(`pedido-${parseInt(req.params.id)}.pdf`, (err, data) => {
+              if (err) {
+                console.log("Erro dentro")
+                return res.status(500).send(err);
+              }
+              res.contentType("application/pdf");
+              res.sendFile(data.filename);
+            });
+          } catch (error) {
+            console.log("Erro fora")
+            return res.status(500).send(error);
+          }
         
     })
 

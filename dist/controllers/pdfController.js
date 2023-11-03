@@ -60,13 +60,20 @@ const generatePDF = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
                 height: "20mm"
             }
         };
-        pdf.create(html, options).toFile("pedido.pdf", (err, data) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            console.log("Gerado");
-        });
-        return res.send(html);
+        try {
+            pdf.create(html, options).toFile(`pedido-${parseInt(req.params.id)}.pdf`, (err, data) => {
+                if (err) {
+                    console.log("Erro dentro");
+                    return res.status(500).send(err);
+                }
+                res.contentType("application/pdf");
+                res.sendFile(data.filename);
+            });
+        }
+        catch (error) {
+            console.log("Erro fora");
+            return res.status(500).send(error);
+        }
     });
 });
 exports.generatePDF = generatePDF;
