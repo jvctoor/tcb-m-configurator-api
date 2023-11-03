@@ -20,7 +20,7 @@ class PedidoDAO {
                 }))
             },
             ambientes: {
-                create: interfaceItem.ambientes.map(ambiente => ({
+                create: interfaceItem.ambiente.map(ambiente => ({
                     ambiente: ambiente
                 }))
             }

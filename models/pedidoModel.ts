@@ -12,7 +12,7 @@ interface IPedido {
       preco: number;
       quantidade: number;
     }[];
-    ambientes: string[];
+    ambiente: string[];
   }[];
   cabos: { lista_itens: {cod?: number, descricao: string, imagem: string, preco: number, tipo: string, }; quantidade: number; valor: number }[];
   observacoes?: string;

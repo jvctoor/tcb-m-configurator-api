@@ -21,8 +21,8 @@ async function main() {
     const ambientes = ["Lista de string 1", "Lista de string 2"]
 
     const interfaces = [
-        { quantidade: 1, valor: 90.20, imagem: "url.com", itens_selecionados: itens_interface1 ,ambientes: ambientes},
-        { quantidade: 2, valor: 100.50, imagem: "url.com", itens_selecionados: itens_interface2, ambientes: ambientes},
+        { quantidade: 1, valor: 90.20, imagem: "url.com", itens_selecionados: itens_interface1 ,ambiente: ambientes},
+        { quantidade: 2, valor: 100.50, imagem: "url.com", itens_selecionados: itens_interface2, ambiente: ambientes},
       ];
 
     const cabos = [
