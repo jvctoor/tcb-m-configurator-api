@@ -15,8 +15,7 @@ class PedidoDAO {
             itens: {
                 create: interfaceItem.itens_selecionados.map(item => ({
                     descricao: item.descricao,
-                    preco: item.preco,
-                    quantidade: item.quantidade
+                    preco: item.preco
                 }))
             },
             ambientes: {

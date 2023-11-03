@@ -48,7 +48,6 @@ model Item_Interface {
   idInterface Int
   descricao String
   preco Float
-  quantidade Int
   interface Interface @relation(fields: [idInterface], references: [idInterface])
 }
 

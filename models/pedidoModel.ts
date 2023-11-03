@@ -10,7 +10,6 @@ interface IPedido {
     itens_selecionados: {
       descricao: string;
       preco: number;
-      quantidade: number;
     }[];
     ambiente: string[];
   }[];
