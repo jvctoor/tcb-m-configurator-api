@@ -5,6 +5,7 @@ import cors from 'cors';
 import swaggerJsdoc from 'swagger-jsdoc';
 import bodyParser from 'body-parser';
 import { createPedido, getAllPedidos, getPedidoById } from './controllers/pedidoController';
+import { getPDFById, downloadPDF } from './controllers/pdfController';
 
 const swaggerOptions = {
   swaggerDefinition: {
@@ -66,7 +67,7 @@ app.get('/', (req: Request, res: Response) => {
 
  /**
  * @swagger
- * /pdf/pedidoId/{id_pedido}:
+ * /pdf/viewTemplate/{id_pedido}:
  *   get:
  *     tags:
  *       - Pdf
@@ -82,9 +83,27 @@ app.get('/', (req: Request, res: Response) => {
  *       200:
  *         description: Sucesso
  */
- app.get('/pdf/pedidoId/:id', (req: Request, res: Response) => {
-    res.status(500).send("Em implementação")
- })
+ app.get('/pdf/viewTemplate/:id', getPDFById)
+
+  /**
+ * @swagger
+ * /pdf/download/{id_pedido}:
+ *   get:
+ *     tags:
+ *       - Pdf
+ *     description: Gera um PDF a partir de um ID
+ *     parameters:
+ *       - in: path
+ *         name: id_pedido
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID do pedido a ser obtido
+ *     responses:
+ *       200:
+ *         description: Sucesso
+ */
+ app.get('/pdf/download/:id', downloadPDF)
 
 /**
  * @swagger
@@ -138,7 +157,7 @@ app.get('/', (req: Request, res: Response) => {
  *             imagem:
  *               type: string
  *               default: "url"  # Valor padrão para o campo "imagem"
- *             itens:
+ *             itens_selecionados:
  *               type: array
  *               items:
  *                 type: object
@@ -149,10 +168,7 @@ app.get('/', (req: Request, res: Response) => {
  *                   preco:
  *                     type: number
  *                     default: 20.0  # Valor padrão para o campo "preco"
- *                   quantidade:
- *                     type: number
- *                     default: 3  # Valor padrão para o campo "quantidade"
- *             ambientes:
+ *             ambiente:
  *               type: array
  *               items:
  *                 type: string
@@ -162,13 +178,27 @@ app.get('/', (req: Request, res: Response) => {
  *         items:
  *           type: object
  *           properties:
- *             nome:
- *               type: string
- *               default: "Cabo Do joão"  # Valor padrão para o campo "nome"
+ *             lista_itens:
+ *               type: object
+ *               properties:
+ *                 cod:
+ *                   type: number
+ *                 descricao:
+ *                   type: string
+ *                   default: "Cabo Do joão"  # Valor padrão para o campo "descricao"
+ *                 imagem:
+ *                   type: string
+ *                   default: "url"  # Valor padrão para o campo "imagem"
+ *                 preco:
+ *                   type: number
+ *                   default: 2.90  # Valor padrão para o campo "preco"
+ *                 tipo:
+ *                   type: string
+ *                   default: "Tipo padrão"  # Valor padrão para o campo "tipo"
  *             quantidade:
  *               type: number
  *               default: 3  # Valor padrão para o campo "quantidade"
- *             preco:
+ *             valor:
  *               type: number
  *               default: 2.90  # Valor padrão para o campo "preco"
  *       observacoes:

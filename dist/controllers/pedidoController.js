@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getPedidoById = exports.getAllPedidos = exports.createPedido = void 0;
 const pedidoDAO_1 = __importDefault(require("../daos/pedidoDAO"));
+const pdfService_1 = require("../services/pdfService");
 const pedidoDAO = new pedidoDAO_1.default();
 function verificaPedido(pedido) {
     if (!pedido) {
@@ -45,7 +46,15 @@ const createPedido = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         const pedidoFormatado = verificaPedido(pedido);
         try {
             const pedidoInserido = yield pedidoDAO.createPedido(pedidoFormatado);
-            res.send({ message: "Pedido inserido!", payload: pedidoInserido });
+            // res.send(pedidoInserido)
+            const template = yield (0, pdfService_1.generateTemplate)(pedidoInserido.idPedido);
+            const host = req.get('host');
+            const protocol = req.protocol;
+            const url = `${protocol}://${host}/pdf/pedidoId/${pedidoInserido.idPedido}`;
+            const pdf = yield (0, pdfService_1.downloadPDF)(url);
+            res.contentType("application/pdf");
+            console.log("PDF Gerado");
+            res.send(pdf);
         }
         catch (e) {
             if (e instanceof Error) {

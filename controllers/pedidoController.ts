@@ -2,7 +2,8 @@ import { resolveSoa } from 'dns';
 import e, { request, Request, Response } from 'express';
 import { readdirSync } from 'fs';
 import PedidoDAO from '../daos/pedidoDAO';
-import IPedido from '../models/pedidoModel'
+import IPedido from '../models/pedidoModel';
+import { generateTemplate, downloadPDF } from '../services/pdfService';
 
 const pedidoDAO: PedidoDAO = new PedidoDAO();
 
@@ -23,11 +24,11 @@ function verificaPedido(pedido: IPedido): IPedido {
         throw new Error('Erro no param: Email');
     }
 
-    if(!pedido.interfaces) {
+    if (!pedido.interfaces) {
         pedido.interfaces = []
     }
 
-    if(!pedido.cabos) {
+    if (!pedido.cabos) {
         pedido.cabos = []
     }
     return pedido;
@@ -40,18 +41,27 @@ export const createPedido = async (req: Request, res: Response) => {
         const pedidoFormatado = verificaPedido(pedido)
         try {
             const pedidoInserido = await pedidoDAO.createPedido(pedidoFormatado)
-            res.send({message: "Pedido inserido!", payload: pedidoInserido})
-        } catch(e) {
+            // res.send(pedidoInserido)
+            const template = await generateTemplate(pedidoInserido.idPedido);
+            const host = req.get('host');
+            const protocol = req.protocol;
+            const url = `${protocol}://${host}/pdf/pedidoId/${pedidoInserido.idPedido}`;
+            const pdf = await downloadPDF(url);
+            res.contentType("application/pdf")
+            console.log("PDF Gerado")
+            res.send(pdf);
+        } catch (e) {
             if (e instanceof Error) {
                 const errorMessage = e.message;
-                res.status(400).send({payload: errorMessage});
-        }}
-    } catch(e) {
+                res.status(400).send({ payload: errorMessage });
+            }
+        }
+    } catch (e) {
         if (e instanceof Error) {
             const errorMessage = e.message;
-            res.status(400).send({payload: errorMessage});
+            res.status(400).send({ payload: errorMessage });
         } else {
-            res.status(500).send({payload: 'Ocorreu um erro no servidor.'});
+            res.status(500).send({ payload: 'Ocorreu um erro no servidor.' });
         }
     }
 }
@@ -60,15 +70,15 @@ export const getAllPedidos = async (req: Request, res: Response) => {
     try {
         const pedidos = await pedidoDAO.getAllPedidos();
         if (pedidos) {
-            res.send({message: "Sucesso!", total: pedidos.length, payload: pedidos})
+            res.send({ message: "Sucesso!", total: pedidos.length, payload: pedidos })
         } else {
-            res.send({message:"Nada por aqui!", total:0, payload: []})
+            res.send({ message: "Nada por aqui!", total: 0, payload: [] })
         }
     } catch (e) {
         if (e instanceof Error) {
             const errorMessage = e.message;
-            res.status(400).send({payload: errorMessage});
-        } 
+            res.status(400).send({ payload: errorMessage });
+        }
     }
 }
 
@@ -77,14 +87,14 @@ export const getPedidoById = async (req: Request, res: Response) => {
     try {
         const pedido = await pedidoDAO.getPedidoById(parseInt(id));
         if (pedido) {
-            res.send({message: "Sucesso!", payload: pedido})
+            res.send({ message: "Sucesso!", payload: pedido })
         } else {
-            res.send({message: "Ops! Nada por aqui"})
+            res.send({ message: "Ops! Nada por aqui" })
         }
-    } catch(e) {
+    } catch (e) {
         if (e instanceof Error) {
             const errorMessage = e.message;
-            res.status(400).send({payload: errorMessage});
-        } 
+            res.status(400).send({ payload: errorMessage });
+        }
     }
 }

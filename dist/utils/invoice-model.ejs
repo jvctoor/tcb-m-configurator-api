@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice TCB-M Configurator</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        table {
+            width: 100%;
+        }
+
+        th {
+            text-align: left;
+        }
+    </style>
+</head>
+<body class="bg-white-100">
+    <div class="m-8">           
+        <h1 class="text-3xl mb-8">Interfaces montadas</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Quantidade</th>
+                    <th>Valor</th>
+                    <th>Imagem Path</th>
+                </tr>
+            </thead>
+            <tbody>
+            <% if (pedido.interfaces.length > 0) { %>
+                <% pedido.interfaces.forEach(interface => { %>
+                    <tr>
+                        <td><%= interface.quantidade %></td>
+                        <td><%= interface.valor %></td>
+                        <td><%= interface.imagem %></td>
+                    </tr>
+                <%  }); %>
+            <% } %>
+            </tbody>
+            <tfoot>
+                <tr><td colspan="2"><%=pedido.interfaces.length%> interfaces</td></tr>
+            </tfoot>
+        </table>
+    </div>
+</body>
+</html>
