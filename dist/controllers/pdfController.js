@@ -87,7 +87,7 @@ const downloadPDF = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     const page = yield browser.newPage();
     const host = req.get('host');
     const protocol = req.protocol;
-    const url = `${protocol}://${host}/pdf/pedidoId/${req.params.id}`;
+    const url = `${protocol}://${host}/pdf/viewTemplate/${req.params.id}`;
     yield page.goto(url, {
         waitUntil: 'networkidle0'
     });

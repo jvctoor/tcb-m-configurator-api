@@ -63,7 +63,7 @@ export const downloadPDF = async (req: Request, res: Response) => {
     const host = req.get('host');
     const protocol = req.protocol;
     
-    const url = `${protocol}://${host}/pdf/pedidoId/${req.params.id}`;
+    const url = `${protocol}://${host}/pdf/viewTemplate/${req.params.id}`;
 
     await page.goto(url, {
         waitUntil: 'networkidle0'

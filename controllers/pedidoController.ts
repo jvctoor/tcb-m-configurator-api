@@ -4,7 +4,6 @@ import * as fs from 'fs';
 import PedidoDAO from '../daos/pedidoDAO';
 import * as path from 'path';
 import IPedido from '../models/pedidoModel';
-import { generatePDF, generateTemplate, downloadPDF } from '../services/pdfService';
 
 const pedidoDAO: PedidoDAO = new PedidoDAO();
 
@@ -42,24 +41,10 @@ export const createPedido = async (req: Request, res: Response) => {
         const pedidoFormatado = verificaPedido(pedido)
         try {
             const pedidoInserido = await pedidoDAO.createPedido(pedidoFormatado)
-            const filePath = path.join(__dirname, "..", 'pdfs', `pedido-${pedidoInserido.idPedido}.pdf`);
-            try {
-                const pdf = await generatePDF(pedidoInserido.idPedido);
-                res.contentType("application/pdf");
-                console.log("PDF Gerado");
-                res.send(pdf);
-              
-                // Mover o código de exclusão aqui
-                fs.unlink(filePath, (err) => {
-                  if (err) {
-                    console.error("Erro ao apagar:", err);
-                  } else {
-                    console.log("Arquivo apagado com sucesso");
-                  }
-                });
-              } catch (error) {
-                console.error("Erro ao gerar PDF:", error);
-              }
+            const host = req.get('host');
+            const protocol = req.protocol;
+            const url = `${protocol}://${host}/pdf/download/${pedidoInserido.idPedido}`;
+            res.send({message: "Pedido inserido com sucesso!", pdfUrl: url, payload: pedidoInserido,})
         } catch (e) {
             if (e instanceof Error) {
                 const errorMessage = e.message;
