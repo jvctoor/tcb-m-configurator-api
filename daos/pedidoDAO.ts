@@ -79,7 +79,8 @@ class PedidoDAO {
                 cabos: true,
                 interfaces: {
                     include: {
-                        ambientes:true
+                        ambientes:true,
+                        itens:true
                     }
                 }
             }

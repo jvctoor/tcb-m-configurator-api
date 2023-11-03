@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,43 +8,104 @@
     <title>Invoice TCB-M Configurator</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <style>
-        table {
-            width: 100%;
-        }
 
-        th {
-            text-align: left;
-        }
-    </style>
 </head>
+
 <body class="bg-white-100">
-    <div class="m-8">           
-        <h1 class="text-3xl mb-8">Interfaces montadas</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Quantidade</th>
-                    <th>Valor</th>
-                    <th>Imagem Path</th>
-                </tr>
-            </thead>
-            <tbody>
-            <% if (pedido.interfaces.length > 0) { %>
-                <% pedido.interfaces.forEach(interface => { %>
-                    <tr>
-                        <td><%= interface.quantidade %></td>
-                        <td><%= interface.valor %></td>
-                        <td><%= interface.imagem %></td>
-                    </tr>
-                <%  }); %>
-            <% } %>
-            </tbody>
-            <tfoot>
-                <tr><td colspan="2"><%=pedido.interfaces.length%> interfaces</td></tr>
-            </tfoot>
-        </table>
+    <div class="m-8">
+        <div class="flex items-center justify-between mb-8">
+            <h1 class="text-3xl mb-4 font-bold">Seu pedido</h1>
+            <div class="max-w-md mx-auto bg-white rounded p-6">
+                <h2 class="text-xl font-bold mb-4">Informações de Contato</h2>
+                <div class="mb-4 ">
+                    <p class="text-gray-700 text-sm font-normal mb-2">Nome: <%= pedido.nome %>
+                    </p>
+                </div>
+                <div class="mb-4">
+                    <p class="text-gray-700 text-sm font-normal mb-2">Email: <%= pedido.email %>
+                    </p>
+                </div>
+                <div class="mb-4">
+                    <p class="text-gray-700 text-sm font-normal mb-2">Telefone: <%= pedido.telefone %>
+                    </p>
+                </div>
+                <div class="mb-4">
+                    <p class="text-gray-700 text-sm font-normal mb-2">Empresa: <%= pedido.empresa %>
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <% if (pedido.interfaces.length> 0) { %>
+            <% pedido.interfaces.forEach((interface, indice)=> { %>
+
+                <div>
+                    <h1 class="text-2xl font-medium">Interface <%= indice+1 %></h1>
+                    <hr class="border-t border-gray-300 my-2">
+                </div>
+
+                <div class="relative overflow-x-auto">
+
+                    <table class="w-full text-sm text-left text-gray-500">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    Quantidade
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Valor
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="bg-white border-b">
+                                <th scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <%= interface.quantidade %>
+                                </th>
+                                <td class="px-6 py-4">
+                                    <%= interface.valor %>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4>Itens da interface</h4>
+                    
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    Descrição
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Preço
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (interface.itens.length> 0) { %>
+                                <% interface.itens.forEach(item=> { %>
+                            <tr class="bg-white border-b dark:bg-gray-800 ">
+                                <th scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <%= item.descricao %>
+                                </th>
+                                <td class="px-6 py-4">
+                                    <%= item.preco %>
+                                </td>
+                            </tr>
+                                <% }); %>
+                            <% } %>
+                        </tbody>
+                    </table>
+
+                </div>
+
+                
+
+            <% }); %>
+        <% } %>
     </div>
 </body>
+
 </html>
