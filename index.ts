@@ -1,6 +1,7 @@
 import app from './server';
 import express, { Express, Request, Response } from 'express';
 import swaggerUi from 'swagger-ui-express';
+import cors from 'cors';
 import swaggerJsdoc from 'swagger-jsdoc';
 import bodyParser from 'body-parser';
 import { createPedido, getAllPedidos, getPedidoById } from './controllers/pedidoController';
@@ -20,6 +21,7 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(bodyParser.json())
+app.use(cors())
 
 app.get('/', (req: Request, res: Response) => {
   res.send("Hello Joao");
