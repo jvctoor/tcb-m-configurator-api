@@ -91,6 +91,7 @@ const getPDFById = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.getPDFById = getPDFById;
 const downloadPDF = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const browser = yield puppeteer.launch({
+        headless: true,
         'args': [
             '--no-sandbox',
             '--disable-setuid-sandbox'

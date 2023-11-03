@@ -63,6 +63,7 @@ export const getPDFById = async (req: Request, res: Response) => {
 
 export const downloadPDF = async (req: Request, res: Response) => {
     const browser = await puppeteer.launch({
+        headless: true,
         'args': [
             '--no-sandbox',
             '--disable-setuid-sandbox'
