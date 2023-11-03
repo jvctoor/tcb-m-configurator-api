@@ -97,6 +97,7 @@ const downloadPDF = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         ],
         headless: "new"
     });
+    console.log("funciona pf");
     const page = yield browser.newPage();
     const host = req.get('host');
     const protocol = req.protocol;

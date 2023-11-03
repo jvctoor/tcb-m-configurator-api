@@ -11,13 +11,13 @@ const pedidoDAO: PedidoDAO = new PedidoDAO();
 export const generatePDF = async (req: Request, res: Response) => {
     const pedido = await pedidoDAO.getPedidoById(parseInt(req.params.id));
     //console.log(JSON.stringify({pedido: pedido}, null, 2))
-    
-    ejs.renderFile(path.join(__dirname, ".." ,"utils", "invoice-model.ejs"), {pedido: pedido}, (error, html) => {
+
+    ejs.renderFile(path.join(__dirname, "..", "utils", "invoice-model.ejs"), { pedido: pedido }, (error, html) => {
         if (error) {
             console.log("Erro")
             return res.status(500).send(error)
         }
-        
+
 
         const options = {
             height: "11.25in",
@@ -33,25 +33,25 @@ export const generatePDF = async (req: Request, res: Response) => {
 
         try {
             pdf.create(html, options).toFile(`pedido-${parseInt(req.params.id)}.pdf`, (err, data) => {
-              if (err) {
-                console.log("Erro dentro")
-                return res.status(500).send(err);
-              }
-              res.contentType("application/pdf");
-              res.sendFile(data.filename);
+                if (err) {
+                    console.log("Erro dentro")
+                    return res.status(500).send(err);
+                }
+                res.contentType("application/pdf");
+                res.sendFile(data.filename);
             });
-          } catch (error) {
+        } catch (error) {
             console.log("Erro fora")
             return res.status(500).send(error);
-          }
-        
+        }
+
     })
 
 }
 
 export const getPDFById = async (req: Request, res: Response) => {
     const pedido = await pedidoDAO.getPedidoById(parseInt(req.params.id));
-    ejs.renderFile(path.join(__dirname, "..", "utils", "invoice-model.ejs"), {pedido: pedido}, async (error, html) => {
+    ejs.renderFile(path.join(__dirname, "..", "utils", "invoice-model.ejs"), { pedido: pedido }, async (error, html) => {
         if (error) {
             console.log("Erro")
             return res.status(500).send(error)
@@ -63,17 +63,18 @@ export const getPDFById = async (req: Request, res: Response) => {
 
 export const downloadPDF = async (req: Request, res: Response) => {
     const browser = await puppeteer.launch({
-        'args' : [
-          '--no-sandbox',
-          '--disable-setuid-sandbox'
+        'args': [
+            '--no-sandbox',
+            '--disable-setuid-sandbox'
         ],
         headless: "new"
-      });
+    });
+    console.log("funciona pf")
     const page = await browser.newPage()
 
     const host = req.get('host');
     const protocol = req.protocol;
-    
+
     const url = `${protocol}://${host}/pdf/viewTemplate/${req.params.id}`;
 
     await page.goto(url, {
