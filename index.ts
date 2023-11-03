@@ -103,7 +103,7 @@ app.get('/', (req: Request, res: Response) => {
  *       200:
  *         description: Sucesso
  */
- app.get('/pdf/download/:id', generatePDF)
+ app.get('/pdf/download/:id', downloadPDF)
 
 /**
  * @swagger

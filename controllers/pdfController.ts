@@ -62,7 +62,13 @@ export const getPDFById = async (req: Request, res: Response) => {
 }
 
 export const downloadPDF = async (req: Request, res: Response) => {
-    const browser = await puppeteer.launch({headless: "new"})
+    const browser = await puppeteer.launch({
+        'args' : [
+          '--no-sandbox',
+          '--disable-setuid-sandbox'
+        ],
+        headless: "new"
+      });
     const page = await browser.newPage()
 
     const host = req.get('host');

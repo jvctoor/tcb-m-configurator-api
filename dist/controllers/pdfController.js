@@ -90,7 +90,13 @@ const getPDFById = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.getPDFById = getPDFById;
 const downloadPDF = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const browser = yield puppeteer.launch({ headless: "new" });
+    const browser = yield puppeteer.launch({
+        'args': [
+            '--no-sandbox',
+            '--disable-setuid-sandbox'
+        ],
+        headless: "new"
+    });
     const page = yield browser.newPage();
     const host = req.get('host');
     const protocol = req.protocol;
