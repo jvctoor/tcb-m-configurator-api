@@ -14,7 +14,7 @@ interface IPedido {
     }[];
     ambientes: string[];
   }[];
-  cabos: { lista_itens: {cod: number, descricao: string, imagem: string, preco: number, tipo: string, }; quantidade: number; valor: number }[];
+  cabos: { lista_itens: {cod?: number, descricao: string, imagem: string, preco: number, tipo: string, }; quantidade: number; valor: number }[];
   observacoes?: string;
 }
 

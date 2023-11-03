@@ -21,13 +21,13 @@ async function main() {
     const ambientes = ["Lista de string 1", "Lista de string 2"]
 
     const interfaces = [
-        { quantidade: 1, valor: 90.20, imagem: "url.com", itens: itens_interface1 ,ambientes: ambientes},
-        { quantidade: 2, valor: 100.50, imagem: "url.com", itens: itens_interface2, ambientes: ambientes},
+        { quantidade: 1, valor: 90.20, imagem: "url.com", itens_selecionados: itens_interface1 ,ambientes: ambientes},
+        { quantidade: 2, valor: 100.50, imagem: "url.com", itens_selecionados: itens_interface2, ambientes: ambientes},
       ];
 
     const cabos = [
-      { nome: "Cabo coaxial", quantidade: 2, preco: 79.90 },
-      { nome: "Cabo de rede RJ-45", quantidade: 1, preco: 39.90 }
+      { lista_itens: {descricao: "Cabo coaxial", preco:350, imagem: "url", tipo:"Cabo"}, quantidade: 2, valor: 79.90 },
+      { lista_itens: {descricao: "Cabo coaxial 2", preco:120, imagem: "url", tipo:"Cabo2"}, quantidade: 2, valor: 79.90 }
     ]
 
     const pedido: IPedido = {
