@@ -35,12 +35,51 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.downloadPDF = exports.generateTemplate = void 0;
+exports.downloadPDF = exports.generateTemplate = exports.generatePDF = void 0;
 const ejs = __importStar(require("ejs"));
+const pdf = __importStar(require("html-pdf"));
 const path = __importStar(require("path"));
 const puppeteer = __importStar(require("puppeteer"));
 const pedidoDAO_1 = __importDefault(require("../daos/pedidoDAO"));
 const pedidoDAO = new pedidoDAO_1.default();
+const generatePDF = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const pedido = yield pedidoDAO.getPedidoById(id);
+    return new Promise((resolve, reject) => {
+        ejs.renderFile(path.join(__dirname, "..", "utils", "invoice-model.ejs"), { pedido: pedido }, (error, html) => __awaiter(void 0, void 0, void 0, function* () {
+            if (error) {
+                reject(error);
+                return;
+            }
+            const options = {
+                height: "11.25in",
+                width: "8.5in",
+                header: {
+                    height: "20mm"
+                },
+                footer: {
+                    height: "20mm"
+                }
+            };
+            try {
+                const pdfData = yield new Promise((resolve, reject) => {
+                    pdf.create(html, options).toFile(`dist/pdfs/pedido-${id}.pdf`, (err, data) => {
+                        if (err) {
+                            reject(err);
+                        }
+                        else {
+                            resolve(data);
+                        }
+                    });
+                });
+                resolve(pdfData);
+            }
+            catch (error) {
+                reject(error);
+            }
+        }));
+    });
+});
+exports.generatePDF = generatePDF;
 const generateTemplate = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const pedido = yield pedidoDAO.getPedidoById(id);
     ejs.renderFile(path.join(__dirname, "..", "utils", "invoice-model.ejs"), { pedido: pedido }, (error, html) => __awaiter(void 0, void 0, void 0, function* () {

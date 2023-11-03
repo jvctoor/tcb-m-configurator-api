@@ -14,7 +14,7 @@ model Pedido {
   idPedido Int @id @default(autoincrement())
   createdAt DateTime @default(now())
   nome String
-  empresa String
+  empresa String?
   telefone String
   email String
   observacoes String?
