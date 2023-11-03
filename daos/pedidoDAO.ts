@@ -13,7 +13,7 @@ class PedidoDAO {
             valor: interfaceItem.valor,
             imagem: interfaceItem.imagem,
             itens: {
-                create: interfaceItem.itens.map(item => ({
+                create: interfaceItem.itens_selecionados.map(item => ({
                     descricao: item.descricao,
                     preco: item.preco,
                     quantidade: item.quantidade
@@ -27,9 +27,9 @@ class PedidoDAO {
         }));
 
         const cabosData = pedido.cabos.map(cabo => ({
-            nome: cabo.nome,
+            nome: cabo.lista_itens.descricao,
             quantidade: cabo.quantidade,
-            preco: cabo.preco
+            preco: cabo.lista_itens.preco
         }));
 
         return prisma.pedido.create({
