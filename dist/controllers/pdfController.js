@@ -94,10 +94,8 @@ const downloadPDF = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         'args': [
             '--no-sandbox',
             '--disable-setuid-sandbox'
-        ],
-        headless: "new"
+        ]
     });
-    console.log("funciona pf");
     const page = yield browser.newPage();
     const host = req.get('host');
     const protocol = req.protocol;

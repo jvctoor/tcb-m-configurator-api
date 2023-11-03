@@ -66,10 +66,8 @@ export const downloadPDF = async (req: Request, res: Response) => {
         'args': [
             '--no-sandbox',
             '--disable-setuid-sandbox'
-        ],
-        headless: "new"
+        ]
     });
-    console.log("funciona pf")
     const page = await browser.newPage()
 
     const host = req.get('host');
