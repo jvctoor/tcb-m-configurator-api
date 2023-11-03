@@ -107,7 +107,13 @@ const downloadPDF = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     });
     const pdf = yield page.pdf({
         printBackground: true,
-        format: 'Letter'
+        format: 'Letter',
+        margin: {
+            top: '20mm',
+            bottom: '20mm',
+            left: '20mm',
+            right: '20mm' // Define a margem direita como 20mm
+        }
     });
     yield browser.close();
     res.contentType("application/pdf");

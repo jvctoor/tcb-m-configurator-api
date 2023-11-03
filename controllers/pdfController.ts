@@ -83,7 +83,13 @@ export const downloadPDF = async (req: Request, res: Response) => {
 
     const pdf = await page.pdf({
         printBackground: true,
-        format: 'Letter'
+        format: 'Letter',
+        margin: {
+            top: '20mm', // Define a margem superior como 20mm
+            bottom: '20mm', // Define a margem inferior como 20mm
+            left: '20mm', // Define a margem esquerda como 20mm
+            right: '20mm' // Define a margem direita como 20mm
+        }
     })
 
     await browser.close()

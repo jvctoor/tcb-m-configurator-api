@@ -30,15 +30,20 @@
 
 </head>
 
-<body style="padding: 70px; font-family: Arial, Helvetica, sans-serif;">
+<body style="font-family: Arial, Helvetica, sans-serif;">
     <div>
         <h1>Seu pedido</h1>
-        <p>Nome: <%= pedido.nome %>
-        <p>Empresa: <%= pedido.empresa %>
-        <p>Telefone: <%= pedido.telefone %>
-        <p>Email: <%= pedido.email %>
+        <p>Nome: <%= pedido.nome %></p>
+        <p>Empresa: <%= pedido.empresa %></p>
+        <p>Telefone: <%= pedido.telefone %></p>
+        <p>Email: <%= pedido.email %></p>
     </div>
     <hr style="border: .2px solid rgb(240, 240, 240); margin: 30px 0;">
+    <% if (pedido.observacoes) { %>
+    <h4>Observações</h4>
+    <p><%=pedido.observacoes%></p>
+    <hr style="border: .2px solid rgb(240, 240, 240); margin: 30px 0;">
+    <% } %>
     <div>
         <% if (pedido.interfaces.length> 0) { %>
             <% pedido.interfaces.forEach((interface, indice)=> { %>
