@@ -51,7 +51,7 @@ export const generatePDF = async (req: Request, res: Response) => {
 
 export const getPDFById = async (req: Request, res: Response) => {
     const pedido = await pedidoDAO.getPedidoById(parseInt(req.params.id));
-    console.log(console.log(JSON.stringify(pedido, null, 2)))
+    //console.log(console.log(JSON.stringify(pedido, null, 2)))
     ejs.renderFile(path.join(__dirname, "..", "utils", "invoice-model.ejs"), { pedido: pedido }, async (error, html) => {
         if (error) {
             console.log("Erro")
