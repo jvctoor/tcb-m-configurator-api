@@ -116,6 +116,9 @@ const downloadPDF = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         }
     });
     yield browser.close();
+    const nomeDoArquivo = `Configurador-TCB-${req.params.id}.pdf`;
+    // Adicione um cabeçalho Content-Disposition para especificar o nome do arquivo no download
+    res.setHeader('Content-Disposition', `attachment; filename="${nomeDoArquivo}"`);
     res.contentType("application/pdf");
     res.send(pdf);
 });
