@@ -24,11 +24,11 @@ class PedidoDAO {
                         preco: item.preco
                     }))
                 },
-                ambientes: {
+                ambientes: interfaceItem.ambiente ? {
                     create: interfaceItem.ambiente.map(ambiente => ({
                         ambiente: ambiente
                     }))
-                }
+                } : undefined
             }));
             const cabosData = pedido.cabos.map(cabo => ({
                 nome: cabo.lista_itens.descricao,
