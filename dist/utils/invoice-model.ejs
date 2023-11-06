@@ -19,7 +19,7 @@
         h1 {
             font-size: 20px !important;
         }
-        
+
 
         table {
             border-collapse: collapse;
@@ -29,13 +29,13 @@
 
         td,
         th {
-            border: 1px solid #e8edf0;
+            border: 1px solid #eaf0f3;
             text-align: left;
             padding: 8px;
         }
 
         tr:nth-child(even) {
-            background-color: #e8edf0;
+            background-color: #eaf0f3;
         }
 
         .flex-container {
@@ -46,6 +46,15 @@
 
         .list p {
             margin-top: -5px;
+        }
+
+        .imagem_tabela {
+            object-fit: contain;
+            /* Por exemplo, para uma proporção de aspecto de 16:9 */
+            width: 200px;
+            /* Ou qualquer outra largura desejada */
+            height: 150px;
+            /* Garante que a altura se ajuste automaticamente mantendo a proporção de aspecto */
         }
     </style>
 
@@ -63,9 +72,11 @@
             </p>
             <p>Telefone: <%= pedido.telefone %>
             </p>
-            <p>Email: <%= pedido.email %></p>
+            <p>Email: <%= pedido.email %>
+            </p>
 
-            <p>Emitido em: <%= new Date(pedido.createdAt).toLocaleDateString('pt-BR') %></p>
+            <p>Emitido em: <%= new Date(pedido.createdAt).toLocaleDateString('pt-BR') %>
+            </p>
         </div>
         <div>
             <img src="https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/tcb-m-hx3hbs/assets/zihf9nqcyi1q/Logo_Absolute.png"
@@ -103,7 +114,7 @@
                                                 <% interface.itens.forEach((item, indice)=> { %>
                                                     <tr>
                                                         <td>
-                                                            <%= item.imagem %>
+                                                            <img class="imagem_tabela" src="<%= item.imagem %>" width="200" height="100">
                                                         </td>
                                                         <td>
                                                             <%= item.cod %>
