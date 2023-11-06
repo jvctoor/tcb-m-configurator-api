@@ -18,6 +18,7 @@
 
         h1 {
             font-size: 20px !important;
+            color: #4169E1;
         }
 
 
@@ -51,10 +52,16 @@
         .imagem_tabela {
             object-fit: contain;
             /* Por exemplo, para uma proporção de aspecto de 16:9 */
-            width: 200px;
+            width: 100px;
             /* Ou qualquer outra largura desejada */
-            height: 150px;
+            height: 30px;
             /* Garante que a altura se ajuste automaticamente mantendo a proporção de aspecto */
+        }
+
+        @media print {
+            .page-break {
+                page-break-before: always;
+            }
         }
     </style>
 
@@ -80,22 +87,22 @@
         </div>
         <div>
             <img src="https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/tcb-m-hx3hbs/assets/zihf9nqcyi1q/Logo_Absolute.png"
-                width="250" height="70">
+                width="250" height="80">
         </div>
     </div>
     <hr style="border: .2px solid rgb(240, 240, 240); margin: 20px 0;">
     <% if (pedido.observacoes) { %>
-        <h4>Observações</h4>
+        <h1>Observações</h1>
         <p>
             <%=pedido.observacoes%>
         </p>
         <hr style="border: .2px solid rgb(240, 240, 240); margin: 20px 0;">
         <% } %>
-            <div>
+            <div class="list">
                 <% if (pedido.interfaces.length> 0) { %>
                     <% pedido.interfaces.forEach((interface, indice)=> { %>
-                        <h2> Interface <%= indice+1 %>
-                        </h2>
+                        <h1> Interface <%= indice+1 %>
+                        </h1>
                         <p>Quantidade: <%= interface.quantidade %>
                                 <p>Valor: R$<%= interface.valor %>
                                         <p>Ambientes: <%= interface.ambientes.map(ambiente=>
@@ -114,7 +121,8 @@
                                                 <% interface.itens.forEach((item, indice)=> { %>
                                                     <tr>
                                                         <td>
-                                                            <img class="imagem_tabela" src="<%= item.imagem %>" width="200" height="100">
+                                                            <img class="imagem_tabela" src="<%= item.imagem %>"
+                                                                width="200" height="100">
                                                         </td>
                                                         <td>
                                                             <%= item.cod %>
@@ -134,10 +142,10 @@
                                                     <% }); %>
                                                         <% } %>
                                         </table>
-                                        <hr style="border: .2px solid rgb(240, 240, 240); margin: 20px 0;">
+                                        <div class="page-break"></div>
                                         <% }); %>
                                             <% } %>
-
+                                            <!-- <div class="page-break"></div> -->
                                                 <h1>Cabos</h1>
                                                 <table>
                                                     <tr>

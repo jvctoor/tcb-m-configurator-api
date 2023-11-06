@@ -20,11 +20,13 @@ class PedidoDAO {
                     preco: item.preco
                 }))
             },
-            ambientes: interfaceItem.ambiente || interfaceItem.ambiente == "Informe o ambiente" ? {
-                create: interfaceItem.ambiente.map(ambiente => ({
+            ambientes: interfaceItem.ambiente ? {
+                create: interfaceItem.ambiente
+                  .filter(ambiente => ambiente !== "Informe o ambiente")
+                  .map(ambiente => ({
                     ambiente: ambiente
-                }))
-            } : undefined
+                  }))
+              } : undefined
         }));
 
         const cabosData = pedido.cabos.map(cabo => ({
