@@ -79,7 +79,7 @@ const generatePDF = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 exports.generatePDF = generatePDF;
 const getPDFById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const pedido = yield pedidoDAO.getPedidoById(parseInt(req.params.id));
-    console.log(console.log(JSON.stringify(pedido, null, 2)));
+    //console.log(console.log(JSON.stringify(pedido, null, 2)))
     ejs.renderFile(path.join(__dirname, "..", "utils", "invoice-model.ejs"), { pedido: pedido }, (error, html) => __awaiter(void 0, void 0, void 0, function* () {
         if (error) {
             console.log(error);

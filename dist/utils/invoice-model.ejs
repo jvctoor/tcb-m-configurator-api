@@ -65,7 +65,7 @@
             </p>
             <p>Email: <%= pedido.email %></p>
 
-            <p>Emitido em: <%= pedido.createdAt %></p>
+            <p>Emitido em: <%= new Date(pedido.createdAt).toLocaleDateString('pt-BR') %></p>
         </div>
         <div>
             <img src="https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/tcb-m-hx3hbs/assets/zihf9nqcyi1q/Logo_Absolute.png"
