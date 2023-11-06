@@ -21,10 +21,12 @@ class PedidoDAO {
                 itens: {
                     create: interfaceItem.itens_selecionados.map(item => ({
                         descricao: item.descricao,
+                        cod: item.cod,
+                        imagem: item.imagem,
                         preco: item.preco
                     }))
                 },
-                ambientes: interfaceItem.ambiente ? {
+                ambientes: interfaceItem.ambiente || interfaceItem.ambiente == "Informe o ambiente" ? {
                     create: interfaceItem.ambiente.map(ambiente => ({
                         ambiente: ambiente
                     }))
@@ -32,6 +34,8 @@ class PedidoDAO {
             }));
             const cabosData = pedido.cabos.map(cabo => ({
                 nome: cabo.lista_itens.descricao,
+                cod: cabo.lista_itens.cod,
+                imagem: cabo.lista_itens.imagem,
                 quantidade: cabo.quantidade,
                 preco: cabo.lista_itens.preco
             }));

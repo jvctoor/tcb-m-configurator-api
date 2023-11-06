@@ -8,87 +8,151 @@
     <title>Invoice TCB-M Configurator</title>
 
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 14px;
+        }
+
+        h1 {
+            font-size: 20px !important;
+        }
+        
+
         table {
-          font-family: arial, sans-serif;
-          border-collapse: collapse;
-          width: 100%;
-          margin-bottom: 50px;
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 50px;
         }
-        
-        td, th {
-          border: 1px solid #dddddd;
-          text-align: left;
-          padding: 8px;
+
+        td,
+        th {
+            border: 1px solid #e8edf0;
+            text-align: left;
+            padding: 8px;
         }
-        
+
         tr:nth-child(even) {
-          background-color: #dddddd;
+            background-color: #e8edf0;
+        }
+
+        .flex-container {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+        }
+
+        .list p {
+            margin-top: -5px;
         }
     </style>
 
+
 </head>
 
-<body style="font-family: Arial, Helvetica, sans-serif;">
-    <div>
-        <h1>Seu pedido</h1>
-        <p>Nome: <%= pedido.nome %></p>
-        <p>Empresa: <%= pedido.empresa %></p>
-        <p>Telefone: <%= pedido.telefone %></p>
-        <p>Email: <%= pedido.email %></p>
-    </div>
-    <hr style="border: .2px solid rgb(240, 240, 240); margin: 30px 0;">
-    <% if (pedido.observacoes) { %>
-    <h4>Observações</h4>
-    <p><%=pedido.observacoes%></p>
-    <hr style="border: .2px solid rgb(240, 240, 240); margin: 30px 0;">
-    <% } %>
-    <div>
-        <% if (pedido.interfaces.length> 0) { %>
-            <% pedido.interfaces.forEach((interface, indice)=> { %>
-                <h2> Interface <%= indice+1 %> </h2>
-                <p>Quantidade: <%= interface.quantidade %>
-                <p>Valor: R$<%= interface.valor %>
-                <p>Ambientes: <%= interface.ambientes.map(ambiente => ambiente.ambiente).join(', ') %></p>
-                <h4>Itens</h4>
-                    <table>
-                        <tr>
-                          <th>Descrição</th>
-                          <th>Preço</th>
-                        </tr>
-                        <% if (interface.itens.length> 0) { %>
-                            <% interface.itens.forEach((item, indice)=> { %>
-                            <tr>
-                                <td><%= item.descricao %></td>
-                                <td>R$<%= item.preco %></td>
-                             </tr>
-                            <% }); %> 
-                        <% } %>
-                      </table>
-                <hr style="border: .2px solid rgb(240, 240, 240); margin: 10px 0;">
-            <% }); %> 
-        <% } %>
+<body>
+    <div class="flex-container">
+        <div class="list">
+            <h1>Pedido <%= pedido.idPedido %>
+            </h1>
+            <p>Nome: <%= pedido.nome %>
+            </p>
+            <p>Empresa: <%= pedido.empresa %>
+            </p>
+            <p>Telefone: <%= pedido.telefone %>
+            </p>
+            <p>Email: <%= pedido.email %></p>
 
-        <h4>Cabos</h4>
-        <table>
-            <tr>
-                <th>Nome</th>
-                <th>Quantidade</th>
-                <th>Preço</th>
-            </tr>
-            <% if (pedido.cabos.length > 0) { %>
-                <% pedido.cabos.forEach((item, indice)=> { %>
-                    <tr>
-                        <td><%= item.nome %></td>
-                        <td><%= item.quantidade %></td>
-                        <td>R$<%= item.preco %></td>
-                    </tr>
-                <% }); %> 
-            <% } %>
-        </table>
-        
+            <p>Emitido em: <%= pedido.createdAt %></p>
+        </div>
+        <div>
+            <img src="https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/tcb-m-hx3hbs/assets/zihf9nqcyi1q/Logo_Absolute.png"
+                width="250" height="70">
+        </div>
     </div>
+    <hr style="border: .2px solid rgb(240, 240, 240); margin: 20px 0;">
+    <% if (pedido.observacoes) { %>
+        <h4>Observações</h4>
+        <p>
+            <%=pedido.observacoes%>
+        </p>
+        <hr style="border: .2px solid rgb(240, 240, 240); margin: 20px 0;">
+        <% } %>
+            <div>
+                <% if (pedido.interfaces.length> 0) { %>
+                    <% pedido.interfaces.forEach((interface, indice)=> { %>
+                        <h2> Interface <%= indice+1 %>
+                        </h2>
+                        <p>Quantidade: <%= interface.quantidade %>
+                                <p>Valor: R$<%= interface.valor %>
+                                        <p>Ambientes: <%= interface.ambientes.map(ambiente=>
+                                                ambiente.ambiente).join(',') %></p>
+                                        <h4>Itens</h4>
+                                        <table>
+                                            <tr>
+                                                <th>Imagem</th>
+                                                <th>Código</th>
+                                                <th>Descrição</th>
+                                                <th>Quantidade</th>
+                                                <th>Preço</th>
+                                                <th>Valor total</th>
+                                            </tr>
+                                            <% if (interface.itens.length> 0) { %>
+                                                <% interface.itens.forEach((item, indice)=> { %>
+                                                    <tr>
+                                                        <td>
+                                                            <%= item.imagem %>
+                                                        </td>
+                                                        <td>
+                                                            <%= item.cod %>
+                                                        </td>
+                                                        <td>
+                                                            <%= item.descricao %>
+                                                        </td>
+                                                        <td>
+                                                            <%= interface.quantidade %>
+                                                        </td>
+                                                        <td>R$<%= item.preco %>
+                                                        </td>
+                                                        <td>
+                                                            R$<%= item.preco * interface.quantidade %>
+                                                        </td>
+                                                    </tr>
+                                                    <% }); %>
+                                                        <% } %>
+                                        </table>
+                                        <hr style="border: .2px solid rgb(240, 240, 240); margin: 20px 0;">
+                                        <% }); %>
+                                            <% } %>
+
+                                                <h1>Cabos</h1>
+                                                <table>
+                                                    <tr>
+                                                        <th>Nome</th>
+                                                        <th>Quantidade</th>
+                                                        <th>Preço</th>
+                                                    </tr>
+                                                    <% if (pedido.cabos.length> 0) { %>
+                                                        <% pedido.cabos.forEach((item, indice)=> { %>
+                                                            <tr>
+                                                                <td>
+                                                                    <%= item.nome %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= item.quantidade %>
+                                                                </td>
+                                                                <td>R$<%= item.preco %>
+                                                                </td>
+                                                            </tr>
+                                                            <% }); %>
+                                                                <% } %>
+                                                </table>
+
+            </div>
+
+
 </body>
 
 </html>

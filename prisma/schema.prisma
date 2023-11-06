@@ -47,6 +47,8 @@ model Item_Interface {
   createdAt DateTime @default(now())
   idInterface Int
   descricao String
+  cod Int
+  imagem String
   preco Float
   interface Interface @relation(fields: [idInterface], references: [idInterface])
 }
@@ -56,6 +58,8 @@ model Item_Cabo {
   nome String
   quantidade Int
   preco Float
+  cod Int
+  imagem String
   idPedido Int
   pedido Pedido @relation(fields: [idPedido], references: [idPedido])
 }

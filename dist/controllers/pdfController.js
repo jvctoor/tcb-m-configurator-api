@@ -79,10 +79,10 @@ const generatePDF = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 exports.generatePDF = generatePDF;
 const getPDFById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const pedido = yield pedidoDAO.getPedidoById(parseInt(req.params.id));
-    //console.log(console.log(JSON.stringify(pedido, null, 2)))
+    console.log(console.log(JSON.stringify(pedido, null, 2)));
     ejs.renderFile(path.join(__dirname, "..", "utils", "invoice-model.ejs"), { pedido: pedido }, (error, html) => __awaiter(void 0, void 0, void 0, function* () {
         if (error) {
-            console.log("Erro");
+            console.log(error);
             return res.status(500).send(error);
         }
         //res.redirect(`/pdf/download/${parseInt(req.params.id)}`)
@@ -109,16 +109,16 @@ const downloadPDF = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         printBackground: true,
         format: 'Letter',
         margin: {
-            top: '20mm',
-            bottom: '20mm',
-            left: '20mm',
-            right: '20mm' // Define a margem direita como 20mm
+            top: '5mm',
+            bottom: '5mm',
+            left: '5mm',
+            right: '5mm' // Define a margem direita como 20mm
         }
     });
     yield browser.close();
     const nomeDoArquivo = `Configurador-TCB-${req.params.id}.pdf`;
     // Adicione um cabeçalho Content-Disposition para especificar o nome do arquivo no download
-    res.setHeader('Content-Disposition', `attachment; filename="${nomeDoArquivo}"`);
+    //res.setHeader('Content-Disposition', `attachment; filename="${nomeDoArquivo}"`);
     res.contentType("application/pdf");
     res.send(pdf);
 });

@@ -51,10 +51,10 @@ export const generatePDF = async (req: Request, res: Response) => {
 
 export const getPDFById = async (req: Request, res: Response) => {
     const pedido = await pedidoDAO.getPedidoById(parseInt(req.params.id));
-    //console.log(console.log(JSON.stringify(pedido, null, 2)))
+    console.log(console.log(JSON.stringify(pedido, null, 2)))
     ejs.renderFile(path.join(__dirname, "..", "utils", "invoice-model.ejs"), { pedido: pedido }, async (error, html) => {
         if (error) {
-            console.log("Erro")
+            console.log(error)
             return res.status(500).send(error)
         }
         //res.redirect(`/pdf/download/${parseInt(req.params.id)}`)
@@ -85,10 +85,10 @@ export const downloadPDF = async (req: Request, res: Response) => {
         printBackground: true,
         format: 'Letter',
         margin: {
-            top: '20mm', // Define a margem superior como 20mm
-            bottom: '20mm', // Define a margem inferior como 20mm
-            left: '20mm', // Define a margem esquerda como 20mm
-            right: '20mm' // Define a margem direita como 20mm
+            top: '5mm', // Define a margem superior como 20mm
+            bottom: '5mm', // Define a margem inferior como 20mm
+            left: '5mm', // Define a margem esquerda como 20mm
+            right: '5mm' // Define a margem direita como 20mm
         }
     })
 
@@ -97,7 +97,7 @@ export const downloadPDF = async (req: Request, res: Response) => {
     const nomeDoArquivo = `Configurador-TCB-${req.params.id}.pdf`;
 
     // Adicione um cabeçalho Content-Disposition para especificar o nome do arquivo no download
-    res.setHeader('Content-Disposition', `attachment; filename="${nomeDoArquivo}"`);
+    //res.setHeader('Content-Disposition', `attachment; filename="${nomeDoArquivo}"`);
     res.contentType("application/pdf")
     res.send(pdf);
 }
