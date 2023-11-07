@@ -155,7 +155,7 @@
                                 <p>Valor: R$<%= interface.valor %>
                                 <p>Ambientes: <%= interface.ambientes.map(ambiente=>ambiente.ambiente).join(',') %></p>
                             </div>
-                            <div style="width:auto; height:180px; min-width: <%= (interface.itens[0].cod === 5296 || interface.itens[0].cod === 5297) ? '185px' : '140px' %>; background-image: url('<%= interface.itens[0].imagem %>'); background-size: auto 180px; background-repeat: no-repeat; display: flex; flex-direction: row; align-items: flex-end; justify-content: center; margin: 20px 20px 0px 0px">
+                            <div style="width:auto; height:180px; min-width:<%= (interface.itens[0].cod === 5296 || interface.itens[0].cod === 5297) ? '185px' : '140px' %> ; background-image: url('<%= interface.itens[0].imagem %>'); background-size: auto 180px; background-repeat: no-repeat; display: flex; flex-direction: row; align-items: flex-end; justify-content: center; margin: 20px 20px 0px 0px">
                                     <% interface.itens.forEach((item, itemIndex) => { %>
                                         <% if (itemIndex !== 0) { %>
                                             <div>
