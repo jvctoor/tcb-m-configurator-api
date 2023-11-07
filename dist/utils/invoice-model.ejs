@@ -13,16 +13,16 @@
     <style>
         body {
             font-family: 'Open Sans', sans-serif;
-            font-size: 14px;
+            font-size: 12px;
         }
 
         span {
             font-family: 'Open Sans', sans-serif;
-            font-size: 14px;
+            font-size: 12px;
         }
 
         h1 {
-            font-size: 18px !important;
+            font-size: 16px !important;
             color: #4169E1;
         }
 
@@ -59,12 +59,12 @@
         }
 
         .list p {
-            margin-top: -5px;
+            margin-top: -7px;
         }
 
         .texto-negrito {
             font-weight: bold;
-            font-size: 16px;
+            font-size: 14px;
         }
 
 
@@ -130,10 +130,12 @@
             <p>Emitido em: <%= new Date(pedido.createdAt).toLocaleDateString('pt-BR') %>
             </p>
 
+            <p class="texto-negrito">Total do Pedido: R$ <%= totalPedido.toFixed(2) %> </p>
+
         </div>
         <div><img class="logo" src="https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/tcb-m-hx3hbs/assets/zihf9nqcyi1q/Logo_Absolute.png"></div>
     </div>
-    <div style="width: 100%; text-align:right;"><p class="texto-negrito">Total do Pedido: R$ <%= totalPedido.toFixed(2) %> </p></div>
+    
     <hr style="border: .2px solid rgb(240, 240, 240); margin: 20px 0;">
     <% if (pedido.observacoes) { %>
         <h1>Observações</h1>
@@ -153,11 +155,11 @@
                                 <p>Valor: R$<%= interface.valor %>
                                 <p>Ambientes: <%= interface.ambientes.map(ambiente=>ambiente.ambiente).join(',') %></p>
                             </div>
-                            <div style="width:200px; height:200px; background-image: url('<%= interface.itens[0].imagem %>'); background-size: 200px 200px; background-repeat: no-repeat; display: flex; flex-direction: row; align-items: flex-end; justify-content: center">
+                            <div style="width:auto; height:180px; min-width: <%= (interface.itens[0].cod === 5296 || interface.itens[0].cod === 5297) ? '185px' : '140px' %>; background-image: url('<%= interface.itens[0].imagem %>'); background-size: auto 180px; background-repeat: no-repeat; display: flex; flex-direction: row; align-items: flex-end; justify-content: center; margin: 20px 20px 0px 0px">
                                     <% interface.itens.forEach((item, itemIndex) => { %>
                                         <% if (itemIndex !== 0) { %>
                                             <div>
-                                                <img style="width: auto; height: 95px; margin-bottom: 13px;" src="<%= interface.itens[itemIndex].imagem %>">
+                                                <img style="width: auto; height: 77px; margin-bottom: 13px;" src="<%= interface.itens[itemIndex].imagem %>">
                                             </div>
                                         <% } %>
                                     <% }); %>
@@ -209,6 +211,7 @@
                                         <% }); %>
                                             <% } %>
                                             <!-- <div class="page-break"></div> -->
+                                            <% if (pedido.cabos.length> 0) { %>
                                                 <h1>Cabos</h1>
                                                 <table>
                                                     <tr>
@@ -219,7 +222,6 @@
                                                         <th>Preço</th>
                                                         <th>Valor total</th>
                                                     </tr>
-                                                    <% if (pedido.cabos.length> 0) { %>
                                                         <% let totalCabo = 0; %>
                                                         <% pedido.cabos.forEach((item, indice)=> { %>
                                                             <tr>

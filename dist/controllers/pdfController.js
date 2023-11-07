@@ -116,7 +116,13 @@ const downloadPDF = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             left: '5mm',
             right: '5mm' // Define a margem direita como 20mm
         },
-        footerTemplate: '<span class="pageNumber" style="font-size: 15px; width: 100%; text-align: right; margin-right: 5mm"></span>',
+        footerTemplate: `
+        <div style="display: flex; justify-content: flex-end; align-items: center; width: 100%; margin-right: 5mm;">
+        <span class="pageNumber" style="font-size: 15px; margin-right: 5px;"></span>
+        <p style="font-size: 15px; margin-right: 5px;">de</p>
+        <span class="totalPages" style="font-size: 15px;"></span>
+        </div>
+        `,
         headerTemplate: `<p></p>`
     });
     yield browser.close();
