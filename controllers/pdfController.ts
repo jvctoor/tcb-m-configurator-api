@@ -81,15 +81,22 @@ export const downloadPDF = async (req: Request, res: Response) => {
         waitUntil: 'networkidle0'
     })
 
+    const logo = path.join("..", "dist", "utils", "Logo_Absolute.png")
+
     const pdf = await page.pdf({
         printBackground: true,
+        displayHeaderFooter: true,
         format: 'Letter',
         margin: {
             top: '5mm', // Define a margem superior como 20mm
             bottom: '5mm', // Define a margem inferior como 20mm
             left: '5mm', // Define a margem esquerda como 20mm
             right: '5mm' // Define a margem direita como 20mm
-        }
+        },
+        footerTemplate: '<span class="pageNumber" style="font-size: 15px; width: 100%; text-align: right; margin-right: 5mm"></span>',
+        headerTemplate: `<p></p>`
+
+
     })
 
     await browser.close()

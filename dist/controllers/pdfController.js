@@ -105,15 +105,19 @@ const downloadPDF = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     yield page.goto(url, {
         waitUntil: 'networkidle0'
     });
+    const logo = path.join("..", "dist", "utils", "Logo_Absolute.png");
     const pdf = yield page.pdf({
         printBackground: true,
+        displayHeaderFooter: true,
         format: 'Letter',
         margin: {
             top: '5mm',
             bottom: '5mm',
             left: '5mm',
             right: '5mm' // Define a margem direita como 20mm
-        }
+        },
+        footerTemplate: '<span class="pageNumber" style="font-size: 15px; width: 100%; text-align: right; margin-right: 5mm"></span>',
+        headerTemplate: `<p></p>`
     });
     yield browser.close();
     const nomeDoArquivo = `Configurador-TCB-${req.params.id}.pdf`;
