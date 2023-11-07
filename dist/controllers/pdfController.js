@@ -117,7 +117,7 @@ const downloadPDF = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             right: '5mm' // Define a margem direita como 20mm
         },
         footerTemplate: '<span class="pageNumber" style="font-size: 15px; width: 100%; text-align: right; margin-right: 5mm"></span>',
-        headerTemplate: `<p></p>`
+        headerTemplate: `<img width="200" height="200" src="https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/tcb-m-hx3hbs/assets/zihf9nqcyi1q/Logo_Absolute.png">`
     });
     yield browser.close();
     const nomeDoArquivo = `Configurador-TCB-${req.params.id}.pdf`;
