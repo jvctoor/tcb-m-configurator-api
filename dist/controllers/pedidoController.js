@@ -22,9 +22,6 @@ function verificaPedido(pedido) {
     if (!pedido.nome) {
         throw new Error('Erro no param: Nome');
     }
-    if (!pedido.empresa) {
-        throw new Error('Erro no param: Empresa');
-    }
     if (!pedido.telefone) {
         throw new Error('Erro no param: Telefone');
     }
