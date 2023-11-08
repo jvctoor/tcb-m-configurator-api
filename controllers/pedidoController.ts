@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import PedidoDAO from '../daos/pedidoDAO';
 import * as path from 'path';
 import IPedido from '../models/pedidoModel';
+import { stringify } from 'querystring';
 
 const pedidoDAO: PedidoDAO = new PedidoDAO();
 
@@ -41,7 +42,7 @@ export const createPedido = async (req: Request, res: Response) => {
             const host = req.get('host');
             const protocol = req.protocol;
             const url = `${protocol}://${host}/pdf/download/${pedidoInserido.idPedido}`;
-            res.send({message: "Pedido inserido com sucesso!", pdfUrl: url, payload: pedidoInserido,})
+            res.send({ message: "Pedido inserido com sucesso!", pdfUrl: url, payload: pedidoInserido, })
         } catch (e) {
             if (e instanceof Error) {
                 const errorMessage = e.message;
@@ -61,6 +62,25 @@ export const createPedido = async (req: Request, res: Response) => {
 export const getAllPedidos = async (req: Request, res: Response) => {
     try {
         const pedidos = await pedidoDAO.getAllPedidos();
+        //Calculando valor total de cada pedido - Dado derivado
+        pedidos.forEach(pedido => {
+            let totalPedido = 0
+            if (pedido.interfaces && pedido.interfaces.length > 0) {
+                pedido.interfaces.forEach((intf: { itens: any[]; quantidade: number; }, indiceInterface: any) => {
+                    if (intf.itens && intf.itens.length > 0) {
+                        intf.itens.forEach((item: { preco: number; }, indiceItem: any) => {
+                            totalPedido += intf.quantidade * item.preco;
+                        });
+                    }
+                });
+            }
+            if (pedido.cabos && pedido.cabos.length > 0) {
+                pedido.cabos.forEach((cabo: { quantidade: number; preco: number; }) => {
+                    totalPedido += cabo.quantidade * cabo.preco;
+                });
+            }
+            pedido["valorTotal"] = totalPedido.toFixed(2);
+        })
         if (pedidos) {
             res.send({ message: "Sucesso!", total: pedidos.length, payload: pedidos })
         } else {

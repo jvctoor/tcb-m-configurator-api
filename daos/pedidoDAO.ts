@@ -62,7 +62,7 @@ class PedidoDAO {
         });
     }
 
-    async getAllPedidos() {
+    async getAllPedidos(): Promise<any[]> {
         return prisma.pedido.findMany({
             orderBy: {
                 createdAt: 'desc'

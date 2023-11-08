@@ -68,6 +68,25 @@ exports.createPedido = createPedido;
 const getAllPedidos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const pedidos = yield pedidoDAO.getAllPedidos();
+        //Calculando valor total de cada pedido - Dado derivado
+        pedidos.forEach(pedido => {
+            let totalPedido = 0;
+            if (pedido.interfaces && pedido.interfaces.length > 0) {
+                pedido.interfaces.forEach((intf, indiceInterface) => {
+                    if (intf.itens && intf.itens.length > 0) {
+                        intf.itens.forEach((item, indiceItem) => {
+                            totalPedido += intf.quantidade * item.preco;
+                        });
+                    }
+                });
+            }
+            if (pedido.cabos && pedido.cabos.length > 0) {
+                pedido.cabos.forEach((cabo) => {
+                    totalPedido += cabo.quantidade * cabo.preco;
+                });
+            }
+            pedido["valorTotal"] = totalPedido.toFixed(2);
+        });
         if (pedidos) {
             res.send({ message: "Sucesso!", total: pedidos.length, payload: pedidos });
         }
