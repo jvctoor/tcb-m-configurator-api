@@ -6,7 +6,7 @@ import swaggerJsdoc from 'swagger-jsdoc';
 import bodyParser from 'body-parser';
 import { createPedido, getAllPedidos, getPedidoById } from './controllers/pedidoController';
 import { getPDFById, downloadPDF, generatePDF } from './controllers/pdfController';
-import { login, signup } from './controllers/usuarioController';
+import { login, signup, me } from './controllers/usuarioController';
 import { autenticarToken } from './services/autenticarToken';
 
 const swaggerOptions = {
@@ -91,6 +91,19 @@ app.get('/', (req: Request, res: Response) => {
  *         description: Sucesso
  */
  app.post('/auth/login', login);
+
+ /**
+ * @swagger
+ * /auth/me:
+ *   post:
+ *     tags:
+ *       - Auth
+ *     description: Show Me
+ *     responses:
+ *       200:
+ *         description: Sucesso
+ */
+  app.get('/auth/me', autenticarToken, me);
 
  /**
  * @swagger

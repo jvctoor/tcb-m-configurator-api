@@ -35,7 +35,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signup = exports.login = void 0;
+exports.me = exports.signup = exports.login = void 0;
 const usuarioDAO_1 = __importDefault(require("../daos/usuarioDAO"));
 const bcrypt = __importStar(require("bcrypt"));
 const jwt = __importStar(require("jsonwebtoken"));
@@ -53,7 +53,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!senhaCorreta) {
             res.send(401);
         }
-        const token = jwt.sign({ id: user.idUsuario, email: user.email }, process.env.CHAVE_SECRETA, { expiresIn: '7d' } // O token expira em 1 hora
+        const token = jwt.sign({ id: user.idUsuario, email: user.email, usuario: user.usuario }, process.env.CHAVE_SECRETA, { expiresIn: '7d' } // O token expira em 1 hora
         );
         res.send({ authToken: token });
     }
@@ -85,3 +85,12 @@ const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.signup = signup;
+const me = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        res.send({ me: req.usuario });
+    }
+    catch (error) {
+        res.status(400).send("Erro");
+    }
+});
+exports.me = me;

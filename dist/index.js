@@ -88,6 +88,18 @@ server_1.default.get('/pedido', autenticarToken_1.autenticarToken, pedidoControl
 server_1.default.post('/auth/login', usuarioController_1.login);
 /**
 * @swagger
+* /auth/me:
+*   post:
+*     tags:
+*       - Auth
+*     description: Show Me
+*     responses:
+*       200:
+*         description: Sucesso
+*/
+server_1.default.get('/auth/me', autenticarToken_1.autenticarToken, usuarioController_1.me);
+/**
+* @swagger
 * /auth/signup:
 *   post:
 *     tags:

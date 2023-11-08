@@ -23,7 +23,7 @@ export const login = async (req: Request, res: Response) => {
         }
 
         const token = jwt.sign(
-            { id: user.idUsuario, email: user.email },
+            { id: user.idUsuario, email: user.email, usuario: user.usuario },
             process.env.CHAVE_SECRETA as string,
             { expiresIn: '7d' } // O token expira em 1 hora
         );
@@ -60,5 +60,13 @@ export const signup = async (req: Request, res: Response) => {
     } catch (error) {
         console.error('Erro ao cadastrar usuário:', error);
         return res.status(500).json({ mensagem: 'Ocorreu um erro ao cadastrar o usuário' });
+    }
+}
+
+export const me = async (req: Request, res: Response) => {
+    try {
+        res.send({me: req.usuario})
+    } catch (error) {
+        res.status(400).send("Erro")
     }
 }
