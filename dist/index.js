@@ -75,6 +75,12 @@ server_1.default.get('/pedido', pedidoController_1.getAllPedidos);
 *         schema:
 *           type: integer
 *         description: ID do pedido a ser obtido
+*       - in: query
+*         name: mostraPreco
+*         required: false
+*         schema:
+*           type: boolean
+*         description: true ou false, define se preço aparece no pdf
 *     responses:
 *       200:
 *         description: Sucesso
@@ -94,6 +100,12 @@ server_1.default.get('/pdf/viewTemplate/:id', pdfController_1.getPDFById);
 *         schema:
 *           type: integer
 *         description: ID do pedido a ser obtido
+*       - in: query
+*         name: mostraPreco
+*         required: false
+*         schema:
+*           type: boolean
+*         description: true ou false, define se preço aparece no pdf
 *     responses:
 *       200:
 *         description: Sucesso

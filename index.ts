@@ -79,6 +79,12 @@ app.get('/', (req: Request, res: Response) => {
  *         schema:
  *           type: integer
  *         description: ID do pedido a ser obtido
+ *       - in: query
+ *         name: mostraPreco
+ *         required: false
+ *         schema:
+ *           type: boolean
+ *         description: true ou false, define se preço aparece no pdf
  *     responses:
  *       200:
  *         description: Sucesso
@@ -99,6 +105,12 @@ app.get('/', (req: Request, res: Response) => {
  *         schema:
  *           type: integer
  *         description: ID do pedido a ser obtido
+ *       - in: query
+ *         name: mostraPreco
+ *         required: false
+ *         schema:
+ *           type: boolean
+ *         description: true ou false, define se preço aparece no pdf
  *     responses:
  *       200:
  *         description: Sucesso

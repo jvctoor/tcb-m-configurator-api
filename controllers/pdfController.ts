@@ -51,8 +51,10 @@ export const generatePDF = async (req: Request, res: Response) => {
 
 export const getPDFById = async (req: Request, res: Response) => {
     const pedido = await pedidoDAO.getPedidoById(parseInt(req.params.id));
+    const mostraPreco = req.query.mostraPreco ? Number(req.query.mostraPreco) : 0;
+    console.log(mostraPreco)
     //console.log(console.log(JSON.stringify(pedido, null, 2)))
-    ejs.renderFile(path.join(__dirname, "..", "utils", "invoice-model.ejs"), { pedido: pedido }, async (error, html) => {
+    ejs.renderFile(path.join(__dirname, "..", "utils", "invoice-model.ejs"), { pedido: pedido, mostrarPreco: mostraPreco }, async (error, html) => {
         if (error) {
             console.log(error)
             return res.status(500).send(error)
@@ -75,13 +77,13 @@ export const downloadPDF = async (req: Request, res: Response) => {
     const host = req.get('host');
     const protocol = req.protocol;
 
-    const url = `${protocol}://${host}/pdf/viewTemplate/${req.params.id}`;
+    const mostraPreco = req.query.mostraPreco ? req.query.mostraPreco : 0;
+
+    const url = `${protocol}://${host}/pdf/viewTemplate/${req.params.id}?mostraPreco=${mostraPreco}`;
 
     await page.goto(url, {
         waitUntil: 'networkidle0'
     })
-
-    const logo = path.join("..", "dist", "utils", "Logo_Absolute.png")
 
     const pdf = await page.pdf({
         printBackground: true,

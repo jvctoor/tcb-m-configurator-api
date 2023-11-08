@@ -126,12 +126,11 @@
             </p>
             <p>Email: <%= pedido.email %>
             </p>
-
             <p>Emitido em: <%= new Date(pedido.createdAt).toLocaleDateString('pt-BR') %>
             </p>
-
+            <% if (mostrarPreco === 1) { %>
             <p class="texto-negrito">Total do Pedido: R$ <%= totalPedido.toFixed(2) %> </p>
-
+            <% } %>
         </div>
         <div><img class="logo" src="https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/tcb-m-hx3hbs/assets/zihf9nqcyi1q/Logo_Absolute.png"></div>
     </div>
@@ -152,7 +151,9 @@
                             <div>
                                 <h1> Interface <%= indice+1 %></h1>
                                 <p>Quantidade: <%= interface.quantidade %>
-                                <p>Valor: R$<%= interface.valor %>
+                                <% if (mostrarPreco === 1) { %> 
+                                    <p>Valor: R$<%= interface.valor %></p>
+                                <% } %>
                                 <p>Ambientes: <%= interface.ambientes.map(ambiente=>ambiente.ambiente).join(',') %></p>
                             </div>
                             <div style="width:auto; height:180px; min-width:<%= (interface.itens[0].cod === 5296 || interface.itens[0].cod === 5297) ? '185px' : '140px' %> ; background-image: url('<%= interface.itens[0].imagem %>'); background-size: auto 180px; background-repeat: no-repeat; display: flex; flex-direction: row; align-items: flex-end; justify-content: center; margin: 20px 20px 0px 0px">
@@ -173,8 +174,8 @@
                                                 <th>Código</th>
                                                 <th>Descrição</th>
                                                 <th>Quantidade</th>
-                                                <th>Preço</th>
-                                                <th>Valor total</th>
+                                                <% if (mostrarPreco === 1) { %><th>Preço</th><% } %>
+                                                <% if (mostrarPreco === 1) { %><th>Valor total</th><% } %>
                                             </tr>
                                             <% if (interface.itens.length> 0) { %>
                                                 <% let totalInterface = 0; %>
@@ -192,19 +193,22 @@
                                                         <td>
                                                             <%= interface.quantidade %>
                                                         </td>
+                                                        <% if (mostrarPreco === 1) { %>
                                                         <td>R$<%= item.preco.toFixed(2) %>
-                                                        </td>
+                                                        </td><% } %>
+                                                        <% if (mostrarPreco === 1) { %>
                                                         <td>
                                                             R$<%= (item.preco * interface.quantidade).toFixed(2) %>
-                                                        </td>
+                                                        </td><% } %>
                                                         <% totalInterface += item.preco * interface.quantidade; %>
                                                         
                                                     </tr>
                                                     <% }); %>
                                                 </table>
+                                                <% if (mostrarPreco === 1) { %>
                                                     <div style="width: 100%; text-align:right;">
                                                         <p class="texto-negrito">Total: R$ <%= totalInterface.toFixed(2) %> </p>
-                                                    </div>
+                                                    </div><% } %>
                                                         <% } %>
                                         
                                         <div class="page-break"></div>
@@ -219,8 +223,8 @@
                                                         <th>Código</th>
                                                         <th>Nome</th>
                                                         <th>Quantidade</th>
-                                                        <th>Preço</th>
-                                                        <th>Valor total</th>
+                                                        <% if (mostrarPreco === 1) { %>  <th>Preço</th><% } %>
+                                                        <% if (mostrarPreco === 1) { %>  <th>Valor total</th><% } %>
                                                     </tr>
                                                         <% let totalCabo = 0; %>
                                                         <% pedido.cabos.forEach((item, indice)=> { %>
@@ -237,17 +241,20 @@
                                                                 <td>
                                                                     <%= item.quantidade %>
                                                                 </td>
+                                                                <% if (mostrarPreco === 1) { %>  
                                                                 <td>R$<%= item.preco.toFixed(2) %>
-                                                                </td>
+                                                                </td><% } %>
+                                                                <% if (mostrarPreco === 1) { %>  
                                                                 <td>R$<%= (item.preco * item.quantidade).toFixed(2) %>
-                                                                </td>
+                                                                </td><% } %>
                                                                 <% totalCabo += item.quantidade * item.preco; %>
                                                             </tr>
                                                             <% }); %>
                                                         </table>
+                                                        <% if (mostrarPreco === 1) { %>  
                                                             <div style="width: 100%; text-align:right;">
                                                                 <p class="texto-negrito">Total: R$ <%= totalCabo.toFixed(2) %> </p>
-                                                            </div>
+                                                            </div><% } %>
                                                                 <% } %>
                                                 
                                                 
