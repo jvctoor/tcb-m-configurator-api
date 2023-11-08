@@ -10,6 +10,8 @@ const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const pedidoController_1 = require("./controllers/pedidoController");
 const pdfController_1 = require("./controllers/pdfController");
+const usuarioController_1 = require("./controllers/usuarioController");
+const autenticarToken_1 = require("./services/autenticarToken");
 const swaggerOptions = {
     swaggerDefinition: {
         info: {
@@ -60,7 +62,56 @@ server_1.default.post('/pedido', pedidoController_1.createPedido);
  *       200:
  *         description: Sucesso
  */
-server_1.default.get('/pedido', pedidoController_1.getAllPedidos);
+server_1.default.get('/pedido', autenticarToken_1.autenticarToken, pedidoController_1.getAllPedidos);
+/**
+ * @swagger
+ * /auth/login:
+ *   post:
+ *     tags:
+ *       - Auth
+ *     description: Login
+ *     parameters:
+ *       - in: body
+ *         schema:
+ *             properties:
+ *               usuario:
+ *                 type: string
+ *               senha:
+ *                 type: string
+ *             required:
+ *               - usuario
+ *               - senha
+ *     responses:
+ *       200:
+ *         description: Sucesso
+ */
+server_1.default.post('/auth/login', usuarioController_1.login);
+/**
+* @swagger
+* /auth/signup:
+*   post:
+*     tags:
+*       - Auth
+*     description: Sign Up
+*     parameters:
+*       - in: body
+*         schema:
+*             properties:
+*               usuario:
+*                 type: string
+*               email:
+*                 type: string
+*               senha:
+*                 type: string
+*             required:
+*               - usuario
+*               - senha
+*               - email
+*     responses:
+*       200:
+*         description: Sucesso
+*/
+server_1.default.post('/auth/signup', usuarioController_1.signup);
 /**
 * @swagger
 * /pdf/viewTemplate/{id_pedido}:

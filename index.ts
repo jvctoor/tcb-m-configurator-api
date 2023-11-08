@@ -6,6 +6,8 @@ import swaggerJsdoc from 'swagger-jsdoc';
 import bodyParser from 'body-parser';
 import { createPedido, getAllPedidos, getPedidoById } from './controllers/pedidoController';
 import { getPDFById, downloadPDF, generatePDF } from './controllers/pdfController';
+import { login, signup } from './controllers/usuarioController';
+import { autenticarToken } from './services/autenticarToken';
 
 const swaggerOptions = {
   swaggerDefinition: {
@@ -63,7 +65,60 @@ app.get('/', (req: Request, res: Response) => {
  *       200:
  *         description: Sucesso
  */
- app.get('/pedido', getAllPedidos);
+ app.get('/pedido', autenticarToken, getAllPedidos);
+
+
+/**
+ * @swagger
+ * /auth/login:
+ *   post:
+ *     tags:
+ *       - Auth
+ *     description: Login
+ *     parameters:
+ *       - in: body
+ *         schema:
+ *             properties:
+ *               usuario:
+ *                 type: string
+ *               senha:
+ *                 type: string
+ *             required:
+ *               - usuario
+ *               - senha
+ *     responses:
+ *       200:
+ *         description: Sucesso
+ */
+ app.post('/auth/login', login);
+
+ /**
+ * @swagger
+ * /auth/signup:
+ *   post:
+ *     tags:
+ *       - Auth
+ *     description: Sign Up
+ *     parameters:
+ *       - in: body
+ *         schema:
+ *             properties:
+ *               usuario:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               senha:
+ *                 type: string
+ *             required:
+ *               - usuario
+ *               - senha
+ *               - email
+ *     responses:
+ *       200:
+ *         description: Sucesso
+ */
+  app.post('/auth/signup', signup);
+
 
  /**
  * @swagger

@@ -64,6 +64,9 @@ class PedidoDAO {
 
     async getAllPedidos() {
         return prisma.pedido.findMany({
+            orderBy: {
+                createdAt: 'desc'
+            },
             include: {
                 interfaces: {
                     include: {
