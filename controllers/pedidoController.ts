@@ -5,6 +5,7 @@ import PedidoDAO from '../daos/pedidoDAO';
 import * as path from 'path';
 import IPedido from '../models/pedidoModel';
 import { stringify } from 'querystring';
+import enviarEmail from '../services/enviarEmail'
 
 const pedidoDAO: PedidoDAO = new PedidoDAO();
 
@@ -42,6 +43,12 @@ export const createPedido = async (req: Request, res: Response) => {
             const host = req.get('host');
             const protocol = req.protocol;
             const url = `${protocol}://${host}/pdf/download/${pedidoInserido.idPedido}`;
+            const emailOpt ={ 
+                to: pedidoInserido.email,
+                subject: "Seu pedido foi gerado!",
+                text: `Confira aqui seu pedido: ${url}`
+            }
+            enviarEmail(emailOpt)
             res.send({ message: "Pedido inserido com sucesso!", pdfUrl: url, payload: pedidoInserido, })
         } catch (e) {
             if (e instanceof Error) {

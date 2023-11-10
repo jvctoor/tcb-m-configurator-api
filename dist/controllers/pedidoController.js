@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getPedidoById = exports.getAllPedidos = exports.createPedido = void 0;
 const pedidoDAO_1 = __importDefault(require("../daos/pedidoDAO"));
+const enviarEmail_1 = __importDefault(require("../services/enviarEmail"));
 const pedidoDAO = new pedidoDAO_1.default();
 function verificaPedido(pedido) {
     if (!pedido) {
@@ -45,6 +46,12 @@ const createPedido = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             const host = req.get('host');
             const protocol = req.protocol;
             const url = `${protocol}://${host}/pdf/download/${pedidoInserido.idPedido}`;
+            const emailOpt = {
+                to: pedidoInserido.email,
+                subject: "Seu pedido foi gerado!",
+                text: `Confira aqui seu pedido: ${url}`
+            };
+            (0, enviarEmail_1.default)(emailOpt);
             res.send({ message: "Pedido inserido com sucesso!", pdfUrl: url, payload: pedidoInserido, });
         }
         catch (e) {
