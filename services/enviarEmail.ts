@@ -8,13 +8,16 @@ interface EmailOptions {
 
 async function enviarEmail(opcoes: EmailOptions): Promise<void> {
     // Configuração do transporte do Nodemailer
+
+    // console.log(process.env.EMAIL_REMETENTE)
+
     const transporter = nodemailer.createTransport({
         host: 'email-ssl.com.br',
         port: 465,
         secure: true,
         requireTLS: true,
         auth: {
-            user: process.env.EMAIL_REMETENTE,
+            user: process.env.EMAIL,
             pass: process.env.SENHA_EMAIL
         }
     });
