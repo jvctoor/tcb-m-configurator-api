@@ -9,22 +9,20 @@ interface EmailOptions {
 async function enviarEmail(opcoes: EmailOptions): Promise<void> {
     // Configuração do transporte do Nodemailer
 
-    // console.log(process.env.EMAIL_REMETENTE)
-
     const transporter = nodemailer.createTransport({
         host: 'email-ssl.com.br',
         port: 465,
         secure: true,
         requireTLS: true,
         auth: {
-            user: process.env.EMAIL,
+            user: process.env.EMAIL_REMETENTE,
             pass: process.env.SENHA_EMAIL
         }
     });
 
     // Configuração do email
     const mailOptions = {
-        from: process.env.EMAIL,
+        from: process.env.EMAIL_REMETENTE,
         to: opcoes.to,
         subject: opcoes.subject,
         text: opcoes.text
@@ -33,7 +31,7 @@ async function enviarEmail(opcoes: EmailOptions): Promise<void> {
     try {
         // Envia o email
         await transporter.sendMail(mailOptions);
-        console.log('Email enviado com sucesso');
+        console.log(`Email enviado com sucesso: ${opcoes.to}`);
     } catch (error) {
         console.error('Erro ao enviar o email:', error);
     }
