@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  idUsuario Int @id @default(autoincrement())
+  usuario String @unique
+  senha String
+  email String @unique
+}
+
+model Pedido {
+  idPedido Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  nome String
+  empresa String?
+  telefone String
+  email String
+  observacoes String?
+  interfaces Interface[]
+  cabos Item_Cabo[]
+}
+
+model Interface {
+  idInterface Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  quantidade Int
+  valor Float
+  imagem String
+  idPedido Int
+  pedido Pedido @relation(fields: [idPedido], references: [idPedido])
+  ambientes Ambiente[]
+  itens Item_Interface[]
+}
+
+model Ambiente {
+  idAmbiente Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  idInterface Int
+  ambiente String
+  interface Interface @relation(fields: [idInterface], references: [idInterface])
+}
+
+model Item_Interface {
+  idItemInterface Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  idInterface Int
+  descricao String
+  cod Int
+  imagem String
+  preco Float
+  interface Interface @relation(fields: [idInterface], references: [idInterface])
+}
+
+model Item_Cabo {
+  idItemCabo Int @id @default(autoincrement())
+  nome String
+  quantidade Int
+  preco Float
+  cod Int
+  imagem String
+  idPedido Int
+  pedido Pedido @relation(fields: [idPedido], references: [idPedido])
+}
+
+
+
+

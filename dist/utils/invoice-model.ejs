@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice TCB-M Configurator</title>
+
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 12px;
+        }
+
+        span {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 12px;
+        }
+
+        h1 {
+            font-size: 16px !important;
+            color: #4169E1;
+        }
+
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        td,
+        th {
+            border: 1px solid #eaf0f3;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #eaf0f3;
+        }
+
+        .flex-container {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+        }
+
+        .flex-container2 {
+            display: flex;
+            flex-wrap: nowrap;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .list p {
+            margin-top: -7px;
+        }
+
+        .texto-negrito {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+
+        .imagem_tabela {
+            object-fit: contain;
+            /* Por exemplo, para uma proporção de aspecto de 16:9 */
+            width: 100px;
+            /* Ou qualquer outra largura desejada */
+            height: 30px;
+            /* Garante que a altura se ajuste automaticamente mantendo a proporção de aspecto */
+        }
+
+        .logo {
+            object-fit: contain;
+            /* Por exemplo, para uma proporção de aspecto de 16:9 */
+            width: 200px;
+            /* Ou qualquer outra largura desejada */
+            height: auto;
+            /* Garante que a altura se ajuste automaticamente mantendo a proporção de aspecto */
+        }
+
+        @media print {
+            .page-break {
+                page-break-before: always;
+            }
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <% let totalPedido = 0; %>
+
+    <% if (pedido.interfaces.length> 0) { %>
+        <% pedido.interfaces.forEach((interface, indice)=> { %>
+            <% interface.itens.forEach((item, indice)=> { %>
+                <% totalPedido += interface.quantidade * item.preco; %>
+            <% }); %>
+        <% }); %>
+    <% } %>
+    
+    <% if (pedido.cabos.length> 0) { %>
+        <% pedido.cabos.forEach((cabo, indice)=> { %>
+            <% totalPedido += cabo.quantidade * cabo.preco; %>
+        <% }); %>
+    <% } %>
+
+
+    <div class="flex-container">
+        <div class="list">
+            <h1>Pedido <%= pedido.idPedido %>
+            </h1>
+            <p>Nome: <%= pedido.nome %>
+            </p>
+            <p>Empresa: <%= pedido.empresa %>
+            </p>
+            <p>Telefone: <%= pedido.telefone %>
+            </p>
+            <p>Email: <%= pedido.email %>
+            </p>
+            <p>Emitido em: <%= new Date(pedido.createdAt).toLocaleDateString('pt-BR') %>
+            </p>
+            <% if (mostrarPreco === 1) { %>
+            <p class="texto-negrito">Total do Pedido: R$ <%= totalPedido.toFixed(2) %> </p>
+            <% } %>
+        </div>
+        <div><img class="logo" src="https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/tcb-m-hx3hbs/assets/zihf9nqcyi1q/Logo_Absolute.png"></div>
+    </div>
+    
+    <hr style="border: .2px solid rgb(240, 240, 240); margin: 20px 0;">
+    <% if (pedido.observacoes) { %>
+        <h1>Observações</h1>
+        <p>
+            <%=pedido.observacoes%>
+        </p>
+        <hr style="border: .2px solid rgb(240, 240, 240); margin: 20px 0;">
+        <% } %>
+            <div class="list">
+                
+                <% if (pedido.interfaces.length> 0) { %>
+                    <% pedido.interfaces.forEach((interface, indice)=> { %>
+                        <div class="flex-container2">
+                            <div>
+                                <h1> Interface <%= indice+1 %></h1>
+                                <p>Quantidade: <%= interface.quantidade %>
+                                <% if (mostrarPreco === 1) { %> 
+                                    <p>Valor: R$<%= interface.valor %></p>
+                                <% } %>
+                                <p>Ambientes: <%= interface.ambientes.map(ambiente=>ambiente.ambiente).join(',') %></p>
+                            </div>
+                            <div style="width:auto; height:180px; min-width:<%= (interface.itens[0].cod === 5296 || interface.itens[0].cod === 5297) ? '185px' : '140px' %> ; background-image: url('<%= interface.itens[0].imagem %>'); background-size: auto 180px; background-repeat: no-repeat; display: flex; flex-direction: row; align-items: flex-end; justify-content: center; margin: 20px 20px 0px 0px">
+                                    <% interface.itens.forEach((item, itemIndex) => { %>
+                                        <% if (itemIndex !== 0) { %>
+                                            <div>
+                                                <img style="width: auto; height: 77px; margin-bottom: 13px;" src="<%= interface.itens[itemIndex].imagem %>">
+                                            </div>
+                                        <% } %>
+                                    <% }); %>
+                            </div>                            
+                        </div>
+
+                                        <h4>Itens</h4>
+                                        <table>
+                                            <tr>
+                                                <th>Imagem</th>
+                                                <th>Código</th>
+                                                <th>Descrição</th>
+                                                <th>Quantidade</th>
+                                                <% if (mostrarPreco === 1) { %><th>Preço</th><% } %>
+                                                <% if (mostrarPreco === 1) { %><th>Valor total</th><% } %>
+                                            </tr>
+                                            <% if (interface.itens.length> 0) { %>
+                                                <% let totalInterface = 0; %>
+                                                <% interface.itens.forEach((item, indice)=> { %>
+                                                    <tr>
+                                                        <td>
+                                                            <img class="imagem_tabela" src="<%= item.imagem %>">
+                                                        </td>
+                                                        <td>
+                                                            <%= item.cod %>
+                                                        </td>
+                                                        <td>
+                                                            <%= item.descricao %>
+                                                        </td>
+                                                        <td>
+                                                            <%= interface.quantidade %>
+                                                        </td>
+                                                        <% if (mostrarPreco === 1) { %>
+                                                        <td>R$<%= item.preco.toFixed(2) %>
+                                                        </td><% } %>
+                                                        <% if (mostrarPreco === 1) { %>
+                                                        <td>
+                                                            R$<%= (item.preco * interface.quantidade).toFixed(2) %>
+                                                        </td><% } %>
+                                                        <% totalInterface += item.preco * interface.quantidade; %>
+                                                        
+                                                    </tr>
+                                                    <% }); %>
+                                                </table>
+                                                <% if (mostrarPreco === 1) { %>
+                                                    <div style="width: 100%; text-align:right;">
+                                                        <p class="texto-negrito">Total: R$ <%= totalInterface.toFixed(2) %> </p>
+                                                    </div><% } %>
+                                                        <% } %>
+                                        <% if (pedido.interfaces.length > 1 && indice + 1 < pedido.interfaces.length) { %> <div class="page-break"></div> <% } %>
+                                        <% }); %>
+                                            <% } %>
+                                            <!-- <div class="page-break"></div> -->
+                                            <% if (pedido.cabos.length> 0) { %>
+                                                <div class="page-break"></div>
+                                                <h1>Cabos</h1>
+                                                <table>
+                                                    <tr>
+                                                        <th>Imagem</th>
+                                                        <th>Código</th>
+                                                        <th>Nome</th>
+                                                        <th>Quantidade</th>
+                                                        <% if (mostrarPreco === 1) { %>  <th>Preço</th><% } %>
+                                                        <% if (mostrarPreco === 1) { %>  <th>Valor total</th><% } %>
+                                                    </tr>
+                                                        <% let totalCabo = 0; %>
+                                                        <% pedido.cabos.forEach((item, indice)=> { %>
+                                                            <tr>
+                                                                <td>
+                                                                    <img class="imagem_tabela" src="<%= item.imagem %>">
+                                                                </td>
+                                                                <td>
+                                                                    <%= item.cod %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= item.nome %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= item.quantidade %>
+                                                                </td>
+                                                                <% if (mostrarPreco === 1) { %>  
+                                                                <td>R$<%= item.preco.toFixed(2) %>
+                                                                </td><% } %>
+                                                                <% if (mostrarPreco === 1) { %>  
+                                                                <td>R$<%= (item.preco * item.quantidade).toFixed(2) %>
+                                                                </td><% } %>
+                                                                <% totalCabo += item.quantidade * item.preco; %>
+                                                            </tr>
+                                                            <% }); %>
+                                                        </table>
+                                                        <% if (mostrarPreco === 1) { %>  
+                                                            <div style="width: 100%; text-align:right;">
+                                                                <p class="texto-negrito">Total: R$ <%= totalCabo.toFixed(2) %> </p>
+                                                            </div><% } %>
+                                                                <% } %>
+                                                
+                                                
+
+            </div>
+
+
+</body>
+
+</html>
