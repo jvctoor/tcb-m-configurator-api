@@ -10,7 +10,7 @@ async function enviarEmail(opcoes: EmailOptions): Promise<void> {
     // Configuração do transporte do Nodemailer
 
     const transporter = nodemailer.createTransport({
-        host: 'email-ssl.com.br',
+        host: 'smtp.gmail.com',
         port: 465,
         secure: true,
         requireTLS: true,

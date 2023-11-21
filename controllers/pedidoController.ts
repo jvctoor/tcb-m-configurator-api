@@ -49,7 +49,7 @@ export const createPedido = async (req: Request, res: Response) => {
                 text: `Confira aqui seu pedido: ${url}`
             }
             const emailOptGerente ={ 
-                to: process.env.EMAIL_GERENCIAL?.toString() ?? "",
+                to: process.env.EMAIL_GERENCIAL ?? "",
                 subject: "Novo pedido gerado!",
                 text: `Confira aqui o pedido: ${url}`
             }
