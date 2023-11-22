@@ -59,7 +59,7 @@ async function main() {
     text: `Confira aqui o pedido: http://localhost:3000/pdf/download/3?mostraPreco=1`
   }
   await enviarEmail(emailOpt)
-  await enviarEmail(emailOptGerente)
+  //await enviarEmail(emailOptGerente)
 
 }
 

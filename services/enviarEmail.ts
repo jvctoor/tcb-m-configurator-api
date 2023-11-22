@@ -10,10 +10,7 @@ async function enviarEmail(opcoes: EmailOptions): Promise<void> {
     // Configuração do transporte do Nodemailer
 
     const transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
-        requireTLS: true,
+        service: 'gmail',
         auth: {
             user: process.env.EMAIL_REMETENTE,
             pass: process.env.SENHA_EMAIL
