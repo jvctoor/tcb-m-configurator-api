@@ -32,7 +32,7 @@ async function enviarEmail(opcoes: EmailOptions): Promise<void> {
         await transporter.sendMail(mailOptions);
         console.log(`Email enviado com sucesso: ${opcoes.to}`);
     } catch (error) {
-        console.error('Erro ao enviar o email:', error);
+        console.error(`Erro ao enviar o email para ${opcoes.to}, usuario: ${process.env.EMAIL_REMETENTE}, senha: ${process.env.SENHA_EMAIL}:`, error);
     }
 }
 
