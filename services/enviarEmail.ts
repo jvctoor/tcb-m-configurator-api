@@ -11,6 +11,8 @@ async function enviarEmail(opcoes: EmailOptions): Promise<void> {
 
     const transporter = nodemailer.createTransport({
         service: 'gmail',
+        secure: true,
+        requireTLS: true,
         auth: {
             user: process.env.EMAIL_REMETENTE,
             pass: process.env.SENHA_EMAIL
