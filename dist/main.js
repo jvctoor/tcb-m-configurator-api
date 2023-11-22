@@ -16,7 +16,6 @@ const client_1 = require("@prisma/client");
 const enviarEmail_1 = __importDefault(require("./services/enviarEmail"));
 const prisma = new client_1.PrismaClient();
 function main() {
-    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         // const pedidoDAO: PedidoDAO = new PedidoDAO();
         // const itens_interface1 = [
@@ -55,12 +54,12 @@ function main() {
             text: `Confira aqui seu pedido: http://localhost:3000/pdf/download/3?mostraPreco=1`
         };
         const emailOptGerente = {
-            to: (_b = (_a = process.env.EMAIL_GERENCIAL) === null || _a === void 0 ? void 0 : _a.toString()) !== null && _b !== void 0 ? _b : "",
+            to: "jvctor23@gmail.com",
             subject: "Novo pedido gerado!",
             text: `Confira aqui o pedido: http://localhost:3000/pdf/download/3?mostraPreco=1`
         };
         yield (0, enviarEmail_1.default)(emailOpt);
-        yield (0, enviarEmail_1.default)(emailOptGerente);
+        //await enviarEmail(emailOptGerente)
     });
 }
 main();

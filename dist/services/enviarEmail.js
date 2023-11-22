@@ -17,8 +17,7 @@ function enviarEmail(opcoes) {
     return __awaiter(this, void 0, void 0, function* () {
         // Configuração do transporte do Nodemailer
         const transporter = nodemailer_1.default.createTransport({
-            host: 'email-ssl.com.br',
-            port: 465,
+            service: 'gmail',
             secure: true,
             requireTLS: true,
             auth: {
@@ -28,7 +27,7 @@ function enviarEmail(opcoes) {
         });
         // Configuração do email
         const mailOptions = {
-            from: process.env.EMAIL,
+            from: process.env.EMAIL_REMETENTE,
             to: opcoes.to,
             subject: opcoes.subject,
             text: opcoes.text
@@ -36,10 +35,10 @@ function enviarEmail(opcoes) {
         try {
             // Envia o email
             yield transporter.sendMail(mailOptions);
-            console.log('Email enviado com sucesso');
+            console.log(`Email enviado com sucesso: ${opcoes.to}`);
         }
         catch (error) {
-            console.error('Erro ao enviar o email:', error);
+            console.error(`Erro ao enviar o email para ${opcoes.to}, usuario: ${process.env.EMAIL_REMETENTE}, senha: ${process.env.SENHA_EMAIL}:`, error);
         }
     });
 }

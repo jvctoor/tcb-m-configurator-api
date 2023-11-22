@@ -38,7 +38,7 @@ function verificaPedido(pedido) {
     return pedido;
 }
 const createPedido = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
+    var _a;
     const pedido = req.body.pedido;
     try {
         const pedidoFormatado = verificaPedido(pedido);
@@ -53,7 +53,7 @@ const createPedido = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 text: `Confira aqui seu pedido: ${url}`
             };
             const emailOptGerente = {
-                to: (_b = (_a = process.env.EMAIL_GERENCIAL) === null || _a === void 0 ? void 0 : _a.toString()) !== null && _b !== void 0 ? _b : "",
+                to: (_a = process.env.EMAIL_GERENCIAL) !== null && _a !== void 0 ? _a : "",
                 subject: "Novo pedido gerado!",
                 text: `Confira aqui o pedido: ${url}`
             };
